@@ -19,7 +19,7 @@ function App() {
           <h1 className="font-bold text-5xl">CAGED Study Tool</h1>
           <div className="flex items-center space-x-4 bg-gray-200 shadow-mg rounded-lg p-6">
             <fieldset className="flex flex-col">
-              <legend className="text-xl font-bold">Options</legend>
+              <legend className="text-xl font-bold mb-2">Options</legend>
               <div className="flex justify-between space-x-2">
                 <label htmlFor="triad_mode">Triad mode</label>
                 <input
@@ -48,54 +48,60 @@ function App() {
                 />
               </div>
             </fieldset>
-            <div className="flex flex-col">
-              <label htmlFor="key">Key</label>
-              <select
-                name="key"
-                value={activeKey}
-                onChange={(e) => {
-                  setActiveKey(e.target.value as CAGED);
-                  setActiveShape(e.target.value as CAGED);
-                  setIntervalMode(!!e.target.value);
-                }}
-              >
-                <option value="">None</option>
-                <option value="C">C</option>
-                <option value="A">A</option>
-                <option value="G">G</option>
-                <option value="E">E</option>
-                <option value="D">D</option>
-              </select>
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="shape">Shape</label>
-              <select
-                name="shape"
-                value={activeShape}
-                onChange={(e) => {
-                  setActiveShape(e.target.value as CAGED);
-                }}
-              >
-                {activeKey ? (
-                  CAGED_NOTES.slice(CAGED_NOTES.indexOf(activeKey))
-                    .concat(
-                      CAGED_NOTES.slice(0, CAGED_NOTES.indexOf(activeKey))
-                    )
-                    .map((note) => (
-                      <option value={note} key={note}>
-                        {note}
-                      </option>
-                    ))
-                ) : (
-                  <>
-                    <option value="C">C</option>
-                    <option value="A">A</option>
-                    <option value="G">G</option>
-                    <option value="E">E</option>
-                    <option value="D">D</option>
-                  </>
-                )}
-              </select>
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col">
+                <label htmlFor="key" className="font-bold">
+                  Key
+                </label>
+                <select
+                  name="key"
+                  value={activeKey}
+                  onChange={(e) => {
+                    setActiveKey(e.target.value as CAGED);
+                    setActiveShape(e.target.value as CAGED);
+                    setIntervalMode(!!e.target.value);
+                  }}
+                >
+                  <option value="">None</option>
+                  <option value="C">C</option>
+                  <option value="A">A</option>
+                  <option value="G">G</option>
+                  <option value="E">E</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="shape" className="font-bold">
+                  Shape
+                </label>
+                <select
+                  name="shape"
+                  value={activeShape}
+                  onChange={(e) => {
+                    setActiveShape(e.target.value as CAGED);
+                  }}
+                >
+                  {activeKey ? (
+                    CAGED_NOTES.slice(CAGED_NOTES.indexOf(activeKey))
+                      .concat(
+                        CAGED_NOTES.slice(0, CAGED_NOTES.indexOf(activeKey))
+                      )
+                      .map((note) => (
+                        <option value={note} key={note}>
+                          {note}
+                        </option>
+                      ))
+                  ) : (
+                    <>
+                      <option value="C">C</option>
+                      <option value="A">A</option>
+                      <option value="G">G</option>
+                      <option value="E">E</option>
+                      <option value="D">D</option>
+                    </>
+                  )}
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -136,7 +142,6 @@ function App() {
         </div>
         <h1 className="text-2xl font-bold">Todo</h1>
         <ul className="list-disc pl-4">
-          <li>✅ Hide accidentals toggle</li>
           <li>
             ⏱️ CAGED mode
             <ul className="list-disc pl-4">
@@ -145,13 +150,20 @@ function App() {
               <li>✅ Display intervals instead of notes</li>
               <li>✅ Highlight triads (1, 3, 5)</li>
               <li>
-                &quot;Roman Numeral&quot; mode
+                ⏱️ &quot;Roman Numeral&quot; mode
                 <ul className="list-disc pl-4">
                   <li>
                     Allow cycling through each scale degree, e.g. Key of C (C,
                     Dm, Em, F, G, Am, Bdim)
                   </li>
                   <li>show triads for each of these scale degrees</li>
+                </ul>
+              </li>
+              <li>
+                ⏱️ Show some other useful scales
+                <ul className="list-disc pl-4">
+                  <li>Natural minor</li>
+                  <li>Pentatonic major</li>
                 </ul>
               </li>
             </ul>
