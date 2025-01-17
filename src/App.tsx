@@ -98,6 +98,7 @@ function App() {
           {(["E", "B", "G", "D", "A", "E"] as CAGED[]).map(
             (firstNote, index) => (
               <String
+                key={`${firstNote}-${index}`}
                 stringNumber={index + 1}
                 activeKey={activeKey}
                 activeShape={activeShape}

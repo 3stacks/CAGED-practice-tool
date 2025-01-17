@@ -20,183 +20,183 @@ export const NOTES = [
   "B",
 ];
 
+const filterIntervals = (intervals: [number, number][]) => {
+  return intervals.filter(([position]) => {
+    return position >= 0;
+  });
+};
+
+const intervalGetterFactory = (stringNumber: number) => {};
+
 const getIntervalsForString1 = (activeShape: CAGED, activeKey: CAGED) => {
+  const getCIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 3],
+      [rootPosition - 2, 4],
+      [rootPosition, 5],
+    ]);
+  };
+  const getAIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 5],
+      [rootPosition + 2, 6],
+      [rootPosition + 4, 7],
+      [rootPosition + 5, 1],
+    ]);
+  };
+  const getGIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 6],
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+    ]);
+  };
+  const getEIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+      [rootPosition + 2, 2],
+    ]);
+  };
+  const getDIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 2],
+      [rootPosition + 2, 3],
+      [rootPosition + 3, 4],
+    ]);
+  };
+
   switch (activeKey) {
     case "C":
       switch (activeShape) {
         case "C":
-          return [
-            [0, 3],
-            [1, 4],
-            [3, 5],
-          ];
+          return getCIntervals(3);
         case "A":
-          return [
-            [3, 5],
-            [5, 6],
-            [7, 7],
-            [8, 1],
-          ];
+          return getAIntervals(3);
         case "G":
-          return [
-            [5, 6],
-            [7, 7],
-            [8, 1],
-          ];
+          return getGIntervals(8);
         case "E":
-          return [
-            [7, 7],
-            [8, 1],
-            [10, 2],
-          ];
+          return getEIntervals(8);
         case "D":
-          return [
-            [10, 2],
-            [12, 3],
-            [13, 4],
-          ];
+          return getDIntervals(10);
       }
     case "A":
       switch (activeShape) {
         case "A":
-          return [
-            [0, 5],
-            [2, 6],
-            [4, 7],
-            [5, 1],
-          ];
+          return getAIntervals(0);
         case "G":
-          return [
-            [2, 6],
-            [4, 7],
-            [5, 1],
-          ];
+          return getGIntervals(5);
         case "E":
-          return [
-            [4, 7],
-            [5, 1],
-            [7, 2],
-          ];
+          return getEIntervals(5);
         case "D":
-          return [
-            [7, 2],
-            [9, 3],
-            [10, 4],
-          ];
+          return getDIntervals(7);
         case "C":
-          return [
-            [9, 3],
-            [10, 4],
-            [12, 5],
-          ];
+          return getCIntervals(12);
       }
   }
 };
 
 const getIntervalsForString2 = (activeShape: CAGED, activeKey: CAGED) => {
+  const getCIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 7],
+      [rootPosition - 2, 1],
+      [rootPosition, 2],
+    ]);
+  };
+  const getAIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 2],
+      [rootPosition + 2, 3],
+      [rootPosition + 3, 4],
+    ]);
+  };
+  const getGIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 3],
+      [rootPosition - 2, 4],
+      [rootPosition, 5],
+    ]);
+  };
+  const getEIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 5],
+      [rootPosition + 2, 6],
+    ]);
+  };
+  const getDIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 6],
+      [rootPosition + 2, 7],
+      [rootPosition + 3, 1],
+    ]);
+  };
+
   switch (activeKey) {
     case "C":
       switch (activeShape) {
         case "C":
-          return [
-            [0, 7],
-            [1, 1],
-            [3, 2],
-          ];
+          return getCIntervals(3);
         case "A":
-          return [
-            [3, 2],
-            [5, 3],
-            [6, 4],
-          ];
+          return getAIntervals(3);
         case "G":
-          return [
-            [5, 3],
-            [6, 4],
-            [8, 5],
-          ];
+          return getGIntervals(8);
         case "E":
-          return [
-            [8, 5],
-            [10, 6],
-          ];
+          return getEIntervals(8);
         case "D":
-          return [
-            [10, 6],
-            [12, 7],
-            [13, 1],
-          ];
+          return getDIntervals(10);
       }
     case "A":
       switch (activeShape) {
         case "A":
-          return [
-            [0, 2],
-            [2, 3],
-            [3, 4],
-          ];
+          return getAIntervals(0);
         case "G":
-          return [
-            [2, 3],
-            [3, 4],
-            [5, 5],
-          ];
+          return getGIntervals(5);
         case "E":
-          return [
-            [5, 5],
-            [7, 6],
-          ];
+          return getEIntervals(5);
         case "D":
-          return [
-            [7, 6],
-            [9, 7],
-            [10, 1],
-          ];
+          return getDIntervals(7);
         case "C":
-          return [
-            [9, 7],
-            [10, 1],
-            [12, 2],
-          ];
+          return getCIntervals(12);
       }
   }
 };
 
 const getIntervalsForString3 = (activeShape: CAGED, activeKey: CAGED) => {
   const getCIntervals = (rootPosition: number) => {
-    return [
+    return filterIntervals([
       [rootPosition - 3, 5],
       [rootPosition - 1, 6],
-      [rootPosition, 7],
-    ].filter(([position]) => position >= 0);
+      [rootPosition + 1, 7],
+    ]);
   };
   const getAIntervals = (rootPosition: number) => {
-    return [
+    return filterIntervals([
       [rootPosition - 1, 6],
       [rootPosition, 7],
       [rootPosition + 2, 1],
-    ].filter(([position]) => position >= 0);
+    ]);
   };
   const getGIntervals = (rootPosition: number) => {
-    return [
+    return filterIntervals([
       [rootPosition - 4, 7],
       [rootPosition - 3, 1],
       [rootPosition - 1, 2],
-    ];
+    ]);
   };
   const getEIntervals = (rootPosition: number) => {
-    return [
+    return filterIntervals([
       [rootPosition - 1, 2],
       [rootPosition + 1, 3],
       [rootPosition + 2, 4],
-    ];
+    ]);
   };
   const getDIntervals = (rootPosition: number) => {
-    return [
+    return filterIntervals([
       [rootPosition - 1, 3],
       [rootPosition, 4],
       [rootPosition + 2, 5],
-    ];
+    ]);
   };
 
   switch (activeKey) {
@@ -230,210 +230,200 @@ const getIntervalsForString3 = (activeShape: CAGED, activeKey: CAGED) => {
 };
 
 const getIntervalsForString4 = (activeShape: CAGED, activeKey: CAGED) => {
+  const getCIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 2],
+      [rootPosition - 1, 3],
+      [rootPosition, 4],
+    ]);
+  };
+  const getAIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 3],
+      [rootPosition, 4],
+      [rootPosition + 2, 5],
+    ]);
+  };
+  const getGIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 5],
+      [rootPosition - 1, 6],
+    ]);
+  };
+  const getEIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 6],
+      [rootPosition + 1, 7],
+      [rootPosition + 2, 1],
+    ]);
+  };
+  const getDIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+      [rootPosition + 2, 2],
+    ]);
+  };
+
   switch (activeKey) {
     case "C":
       switch (activeShape) {
         case "C":
-          return [
-            [0, 2],
-            [2, 3],
-            [3, 4],
-          ];
+          return getCIntervals(3);
         case "A":
-          return [
-            [2, 3],
-            [3, 4],
-            [5, 5],
-          ];
+          return getAIntervals(3);
         case "G":
-          return [
-            [5, 5],
-            [7, 6],
-          ];
+          return getGIntervals(8);
         case "E":
-          return [
-            [7, 6],
-            [9, 7],
-            [10, 1],
-          ];
+          return getEIntervals(8);
         case "D":
-          return [
-            [9, 7],
-            [10, 1],
-            [12, 2],
-          ];
+          return getDIntervals(10);
       }
     case "A":
       switch (activeShape) {
         case "A":
-          return [
-            [0, 4],
-            [2, 5],
-            [4, 6],
-          ];
+          return getAIntervals(0);
         case "G":
-          return [
-            [2, 5],
-            [4, 6],
-          ];
+          return getGIntervals(5);
         case "E":
-          return [
-            [4, 6],
-            [6, 7],
-            [7, 1],
-          ];
+          return getEIntervals(5);
         case "D":
-          return [
-            [6, 7],
-            [7, 1],
-            [9, 2],
-          ];
+          return getDIntervals(7);
         case "C":
-          return [
-            [9, 2],
-            [11, 3],
-            [12, 4],
-          ];
+          return getCIntervals(12);
       }
   }
 };
 
 const getIntervalsForString5 = (activeShape: CAGED, activeKey: CAGED) => {
+  const getCIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 2, 6],
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+    ]);
+  };
+  const getAIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+      [rootPosition + 2, 2],
+    ]);
+  };
+  const getGIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 2],
+      [rootPosition - 1, 3],
+      [rootPosition, 4],
+    ]);
+  };
+  const getEIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 3],
+      [rootPosition, 4],
+      [rootPosition + 2, 5],
+    ]);
+  };
+  const getDIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 2, 4],
+      [rootPosition, 5],
+      [rootPosition + 2, 6],
+    ]);
+  };
+
   switch (activeKey) {
     case "C":
       switch (activeShape) {
         case "C":
-          return [
-            [0, 6],
-            [2, 7],
-            [3, 1],
-          ];
+          return getCIntervals(3);
         case "A":
-          return [
-            [2, 7],
-            [3, 1],
-            [5, 2],
-          ];
+          return getAIntervals(3);
         case "G":
-          return [
-            [5, 2],
-            [7, 3],
-            [8, 4],
-          ];
+          return getGIntervals(8);
         case "E":
-          return [
-            [7, 3],
-            [8, 4],
-            [10, 5],
-          ];
+          return getEIntervals(8);
         case "D":
-          return [
-            [8, 4],
-            [10, 5],
-            [12, 6],
-          ];
+          return getDIntervals(10);
       }
     case "A":
       switch (activeShape) {
         case "A":
-          return [
-            [0, 1],
-            [2, 2],
-            [4, 3],
-          ];
+          return getAIntervals(0);
         case "G":
-          return [
-            [2, 2],
-            [4, 3],
-            [5, 4],
-          ];
+          return getGIntervals(5);
         case "E":
-          return [
-            [4, 3],
-            [5, 4],
-            [7, 5],
-          ];
+          return getEIntervals(5);
         case "D":
-          return [
-            [5, 4],
-            [7, 5],
-            [9, 6],
-          ];
+          return getDIntervals(7);
         case "C":
-          return [
-            [9, 6],
-            [11, 7],
-            [12, 1],
-          ];
+          return getCIntervals(12);
       }
   }
 };
 
 const getIntervalsForString6 = (activeShape: CAGED, activeKey: CAGED) => {
+  const getCIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 3],
+      [rootPosition - 2, 4],
+      [rootPosition, 5],
+    ]);
+  };
+  const getAIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition, 5],
+      [rootPosition + 2, 6],
+    ]);
+  };
+  const getGIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 3, 6],
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+    ]);
+  };
+  const getEIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 1, 7],
+      [rootPosition, 1],
+      [rootPosition + 2, 2],
+    ]);
+  };
+  const getDIntervals = (rootPosition: number) => {
+    return filterIntervals([
+      [rootPosition - 2, 1],
+      [rootPosition, 2],
+      [rootPosition + 2, 3],
+    ]);
+  };
+
   switch (activeKey) {
     case "C":
       switch (activeShape) {
         case "C":
-          return [
-            [0, 3],
-            [1, 4],
-            [3, 5],
-          ];
+          return getCIntervals(3);
         case "A":
-          return [
-            [3, 5],
-            [5, 6],
-          ];
+          return getAIntervals(3);
         case "G":
-          return [
-            [5, 6],
-            [7, 7],
-            [8, 1],
-          ];
+          return getGIntervals(8);
         case "E":
-          return [
-            [7, 7],
-            [8, 1],
-            [10, 2],
-          ];
+          return getEIntervals(8);
         case "D":
-          return [
-            [8, 1],
-            [10, 2],
-            [12, 3],
-          ];
+          return getDIntervals(10);
       }
     case "A":
       switch (activeShape) {
         case "A":
-          return [
-            [0, 5],
-            [2, 6],
-          ];
+          return getAIntervals(0);
         case "G":
-          return [
-            [2, 6],
-            [4, 7],
-            [5, 1],
-          ];
+          return getGIntervals(5);
         case "E":
-          return [
-            [4, 7],
-            [5, 1],
-            [7, 2],
-          ];
+          return getEIntervals(5);
         case "D":
-          return [
-            [5, 1],
-            [7, 2],
-            [9, 3],
-          ];
+          return getDIntervals(7);
         case "C":
-          return [
-            [9, 3],
-            [10, 4],
-            [12, 5],
-          ];
+          return getCIntervals(12);
       }
   }
 };
@@ -456,8 +446,6 @@ export default function String({
   intervalMode: boolean;
 }) {
   const firstIndex = NOTES.indexOf(firstNote);
-
-  console.log({ activeKey, activeShape });
 
   const intervals = useMemo(() => {
     switch (stringNumber) {
@@ -508,7 +496,7 @@ export default function String({
               "note-Bb": note === "Bb",
               "note-B": note === "B",
             })}
-            key={i}
+            key={`${note}-${i}`}
           >
             {intervalMode && interval ? interval[1] : note}
           </div>
