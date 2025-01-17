@@ -268,238 +268,7 @@ const intervalGetterFactory = (
   }
 };
 
-const getIntervalsForString1 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(1);
-
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
-
-const getIntervalsForString2 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(2);
-
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
-
-const getIntervalsForString3 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(3);
-
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
-
-const getIntervalsForString4 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(4);
-
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
-
-const getIntervalsForString5 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(5);
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
-
-const getIntervalsForString6 = (activeShape: CAGED, activeKey: CAGED) => {
-  const {
-    getCIntervals,
-    getAIntervals,
-    getGIntervals,
-    getEIntervals,
-    getDIntervals,
-  } = intervalGetterFactory(6);
-
-  switch (activeKey) {
-    case "C":
-      switch (activeShape) {
-        case "C":
-          return getCIntervals(3);
-        case "A":
-          return getAIntervals(3);
-        case "G":
-          return getGIntervals(8);
-        case "E":
-          return getEIntervals(8);
-        case "D":
-          return getDIntervals(10);
-      }
-    case "A":
-      switch (activeShape) {
-        case "A":
-          return getAIntervals(0);
-        case "G":
-          return getGIntervals(5);
-        case "E":
-          return getEIntervals(5);
-        case "D":
-          return getDIntervals(7);
-        case "C":
-          return getCIntervals(12);
-      }
-  }
-};
+type StringNumber = 1 | 2 | 3 | 4 | 5 | 6;
 
 export default function String({
   firstNote,
@@ -510,7 +279,7 @@ export default function String({
   hideAccidentals,
   intervalMode,
 }: {
-  stringNumber: number;
+  stringNumber: StringNumber;
   firstNote: Notes;
   activeKey: CAGED | "";
   activeShape: CAGED | "";
@@ -521,20 +290,41 @@ export default function String({
   const firstIndex = NOTES.indexOf(firstNote);
 
   const intervals = useMemo(() => {
-    switch (stringNumber) {
-      case 6:
-        return getIntervalsForString6(activeShape, activeKey);
-      case 5:
-        return getIntervalsForString5(activeShape, activeKey);
-      case 4:
-        return getIntervalsForString4(activeShape, activeKey);
-      case 3:
-        return getIntervalsForString3(activeShape, activeKey);
-      case 2:
-        return getIntervalsForString2(activeShape, activeKey);
-      case 1:
-      default:
-        return getIntervalsForString1(activeShape, activeKey);
+    const {
+      getCIntervals,
+      getAIntervals,
+      getGIntervals,
+      getEIntervals,
+      getDIntervals,
+    } = intervalGetterFactory(stringNumber);
+
+    switch (activeKey) {
+      case "C":
+        switch (activeShape) {
+          case "C":
+            return getCIntervals(3);
+          case "A":
+            return getAIntervals(3);
+          case "G":
+            return getGIntervals(8);
+          case "E":
+            return getEIntervals(8);
+          case "D":
+            return getDIntervals(10);
+        }
+      case "A":
+        switch (activeShape) {
+          case "A":
+            return getAIntervals(0);
+          case "G":
+            return getGIntervals(5);
+          case "E":
+            return getEIntervals(5);
+          case "D":
+            return getDIntervals(7);
+          case "C":
+            return getCIntervals(12);
+        }
     }
   }, [stringNumber, firstNote, activeKey, activeShape]);
 
