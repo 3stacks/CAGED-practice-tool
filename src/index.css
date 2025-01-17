@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .note {
+    @apply border-2;
+    @apply border-[#020000];
+    @apply w-[50px];
+    @apply h-[50px];
+    @apply text-xl;
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
+    @apply font-bold;
+  }
+
+  .note-C {
+    color: #fff;
+    @apply bg-C;
+  }
+  .note-Db {
+    color: #fff;
+    @apply bg-Db/80;
+    @apply rounded-full;
+    @apply text-lg;
+  }
+  .note-D {
+    color: #fff;
+    @apply bg-D;
+  }
+  .note-Eb {
+    color: #fff;
+    @apply bg-Eb/80;
+    @apply rounded-full;
+    @apply text-lg;
+  }
+  .note-E {
+    color: #020000;
+    @apply bg-E;
+  }
+  .note-F {
+    color: #fff;
+    @apply bg-F;
+  }
+  .note-Gb {
+    color: #fff;
+    @apply bg-Gb/80;
+    @apply rounded-full;
+    @apply text-lg;
+  }
+  .note-G {
+    color: #fff;
+    @apply bg-G;
+  }
+  .note-Ab {
+    color: #fff;
+    @apply bg-Ab/80;
+    @apply rounded-full;
+    @apply text-lg;
+  }
+  .note-A {
+    color: #020000;
+    @apply bg-A;
+  }
+  .note-Bb {
+    color: #fff;
+    @apply bg-Bb/80;
+    @apply rounded-full;
+    @apply text-lg;
+  }
+  .note-B {
+    color: #020000;
+    @apply bg-B;
+  }
+}
