@@ -2,10 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { CAGED } from "./App";
 import { useMemo } from "react";
-
-export type Notes = "C" | "D" | "E" | "F" | "G" | "A" | "B";
-type Interval = [number, number];
-type StringNumber = 1 | 2 | 3 | 4 | 5 | 6;
+import { Interval, Notes, StringNumber } from "./types";
 
 export const NOTES = [
   "C",
@@ -377,12 +374,13 @@ export default function String({
           (triadMode && interval && ![1, 3, 5].includes(interval[1])) ||
           (hideAccidentals && note.endsWith("b"))
         ) {
-          return <div className="note"></div>;
+          return <div className="note" key={`${note}-${i}`}></div>;
         }
 
         return (
           <div
             className={clsx("note z-10", {
+              flat: note.endsWith("b"),
               "note-C": note === "C",
               "note-Db": note === "Db",
               "note-D": note === "D",
