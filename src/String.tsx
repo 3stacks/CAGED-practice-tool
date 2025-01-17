@@ -4,6 +4,8 @@ import { CAGED } from "./App";
 import { useMemo } from "react";
 
 export type Notes = "C" | "D" | "E" | "F" | "G" | "A" | "B";
+type Interval = [number, number];
+type StringNumber = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const NOTES = [
   "C",
@@ -26,10 +28,8 @@ const filterIntervals = (intervals: [number, number][]) => {
   });
 };
 
-type Interval = [number, number];
-
 const intervalGetterFactory = (
-  stringNumber: number
+  stringNumber: StringNumber
 ): {
   getCIntervals(rootPosition: number): Interval[];
   getAIntervals(rootPosition: number): Interval[];
@@ -126,7 +126,7 @@ const intervalGetterFactory = (
         getAIntervals(rootPosition: number) {
           return filterIntervals([
             [rootPosition - 1, 6],
-            [rootPosition, 7],
+            [rootPosition + 1, 7],
             [rootPosition + 2, 1],
           ]);
         },
@@ -193,7 +193,7 @@ const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 2, 6],
+            [rootPosition - 3, 6],
             [rootPosition - 1, 7],
             [rootPosition, 1],
           ]);
@@ -268,8 +268,6 @@ const intervalGetterFactory = (
   }
 };
 
-type StringNumber = 1 | 2 | 3 | 4 | 5 | 6;
-
 export default function String({
   firstNote,
   stringNumber,
@@ -324,6 +322,45 @@ export default function String({
             return getDIntervals(7);
           case "C":
             return getCIntervals(12);
+        }
+      case "G":
+        switch (activeShape) {
+          case "G":
+            return getGIntervals(3);
+          case "E":
+            return getEIntervals(5);
+          case "D":
+            return getDIntervals(7);
+          case "C":
+            return getCIntervals(10);
+          case "A":
+            return getAIntervals(10);
+        }
+      case "E":
+        switch (activeShape) {
+          case "E":
+            return getEIntervals(0);
+          case "D":
+            return getDIntervals(2);
+          case "C":
+            return getCIntervals(7);
+          case "A":
+            return getAIntervals(7);
+          case "G":
+            return getGIntervals(12);
+        }
+      case "D":
+        switch (activeShape) {
+          case "D":
+            return getDIntervals(0);
+          case "C":
+            return getCIntervals(5);
+          case "A":
+            return getAIntervals(5);
+          case "G":
+            return getGIntervals(10);
+          case "E":
+            return getEIntervals(10);
         }
     }
   }, [stringNumber, firstNote, activeKey, activeShape]);
