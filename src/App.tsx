@@ -150,6 +150,10 @@ function App() {
               <li>✅ Display intervals instead of notes</li>
               <li>✅ Highlight triads (1, 3, 5)</li>
               <li>
+                ⏱️ Extended fretboard view - show all shapes to establish the
+                overlaps between them
+              </li>
+              <li>
                 ⏱️ &quot;Roman Numeral&quot; mode
                 <ul className="list-disc pl-4">
                   <li>
