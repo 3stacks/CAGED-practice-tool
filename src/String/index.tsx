@@ -13,6 +13,7 @@ export default function String({
   hideAccidentals,
   intervalMode,
   scaleDegree,
+  relativeIntervals,
 }: {
   stringNumber: StringNumber;
   firstNote: Notes;
@@ -22,6 +23,7 @@ export default function String({
   scaleDegree: ScaleDegree;
   hideAccidentals: boolean;
   intervalMode: boolean;
+  relativeIntervals: boolean;
 }) {
   const firstIndex = NOTES.indexOf(firstNote);
 
@@ -33,7 +35,7 @@ export default function String({
       getEIntervals,
       getDIntervals,
       getAllIntervals,
-    } = intervalGetterFactory(stringNumber, scaleDegree);
+    } = intervalGetterFactory(stringNumber, scaleDegree, relativeIntervals);
 
     switch (activeKey) {
       case "C":

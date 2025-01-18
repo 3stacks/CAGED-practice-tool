@@ -1,3 +1,5 @@
+import { CAGED } from "./types";
+
 export const NOTES = [
   "C",
   "Db",
@@ -60,3 +62,5 @@ export const KEY_CHORDS = {
     "vii°": "C#dim",
   },
 };
+
+export const CAGED_NOTES: CAGED[] = ["C", "A", "G", "E", "D"];

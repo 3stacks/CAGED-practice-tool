@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import "./index.css";
 import String from "./String/index";
-import { CAGED, ScaleDegree, StringNumber } from "./String/types";
-import { KEY_CHORDS } from "./String/constants";
-
-export const CAGED_NOTES: CAGED[] = ["C", "A", "G", "E", "D"];
+import { CAGED, ScaleDegree, Scales, StringNumber } from "./String/types";
+import { CAGED_NOTES, KEY_CHORDS } from "./String/constants";
 
 const ENABLE_NUMERALS = true;
 
 function App() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
   const [activeShape, setActiveShape] = useState<CAGED | "all" | "">("");
+  const [activeScale, setActiveScale] = useState<Scales>("major");
   const [triadMode, setTriadMode] = useState<boolean>(false);
   const [hideAccidentals, setHideAccidentals] = useState<boolean>(false);
   const [intervalMode, setIntervalMode] = useState<boolean>(false);
+  const [relativeIntervals, setRelativeIntervals] = useState<boolean>(true);
   const [scaleDegree, setScaleDegree] = useState<ScaleDegree>("I");
 
   return (
@@ -36,6 +36,7 @@ function App() {
                   hideAccidentals={hideAccidentals}
                   intervalMode={intervalMode}
                   scaleDegree={scaleDegree}
+                  relativeIntervals={relativeIntervals}
                 />
               )
             )}
@@ -90,6 +91,7 @@ function App() {
                 <select
                   name="shape"
                   value={activeShape}
+                  disabled={!activeKey}
                   onChange={(e) => {
                     setActiveShape(e.target.value as CAGED);
                     setScaleDegree("I");
@@ -115,6 +117,20 @@ function App() {
                     </>
                   )}
                   {/* <option value="all">All</option> */}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="active_scale" className="font-bold">
+                  Scale
+                </label>
+                <select
+                  name="active_scale"
+                  value={activeScale}
+                  onChange={(e) => {
+                    setActiveScale(e.target.value as Scales);
+                  }}
+                >
+                  <option value="major">Major</option>
                 </select>
               </div>
             </div>
@@ -152,21 +168,22 @@ function App() {
                 </div>
               </div>
             </fieldset>
-            {ENABLE_NUMERALS && triadMode && activeKey && (
+            {triadMode && activeKey && (
               <fieldset className="flex flex-col">
                 <legend className="text-xl font-bold mb-2">
                   Arpeggio mode options
                 </legend>
                 <div className="flex flex-col">
                   <div className="flex justify-between space-x-2">
-                    <label htmlFor="intervalMode">
-                      Show relative intervals
+                    <label htmlFor="relative_intervals">
+                      Show relative intervals (todo)
                     </label>
                     <input
+                      disabled
                       type="checkbox"
-                      name="intervalMode"
-                      checked={intervalMode}
-                      onChange={(e) => setIntervalMode(e.target.checked)}
+                      name="relative_intervals"
+                      checked={relativeIntervals}
+                      onChange={(e) => setRelativeIntervals(e.target.checked)}
                     />
                   </div>
                   <p className="text-xs">
@@ -195,7 +212,6 @@ function App() {
                       IV - {KEY_CHORDS[activeKey]["IV"]}
                     </option>
                     <option value="V">V - {KEY_CHORDS[activeKey]["V"]}</option>
-                    <option value="V">V - {KEY_CHORDS[activeKey]["V"]}</option>
                     <option value="vi">
                       vi - {KEY_CHORDS[activeKey]["vi"]}
                     </option>
@@ -217,12 +233,9 @@ function App() {
                   <li>✅ Show major scale in each position</li>
                   <li>✅ Display intervals instead of notes</li>
                   <li>
-                    ⏱️ Highlight triads (1, 3, 5)
+                    ✅ Highlight triads (1, 3, 5)
                     <ul className="list-disc pl-4">
                       <li>✅ Show only 1, 3, 5 intervals</li>
-                      <li>
-                        ⏱️ Hide intervals on strings that shouldn't be played
-                      </li>
                     </ul>
                   </li>
                   <li>⏱️ Highlight tonic note</li>
@@ -231,7 +244,7 @@ function App() {
                     the overlaps between them
                   </li>
                   <li>
-                    ⏱️ &quot;Roman Numeral&quot; mode
+                    ✅ &quot;Roman Numeral&quot; mode
                     <ul className="list-disc pl-4">
                       <li>
                         Allow cycling through each scale degree, e.g. Key of C
@@ -241,14 +254,16 @@ function App() {
                     </ul>
                   </li>
                   <li>
-                    ⏱️ Show some other useful scales
+                    ⏱️ Ability to select scales
                     <ul className="list-disc pl-4">
-                      <li>Natural minor</li>
-                      <li>Pentatonic major</li>
+                      <li>✅ Major</li>
+                      <li>⏱️ Natural minor</li>
+                      <li>⏱️ Pentatonic major</li>
                     </ul>
                   </li>
                 </ul>
               </li>
+              <li>⏱️ Mobile support</li>
             </ul>
           </div>
         </div>
