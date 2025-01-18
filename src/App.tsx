@@ -59,7 +59,7 @@ function App() {
           </div>
         </div>
         <div className="flex justify-between">
-          <div className="flex flex-col items-stretch space-y-4 bg-gray-200 shadow-mg rounded-lg p-6 self-start w-[300px]">
+          <div className="flex flex-col items-stretch space-y-4 bg-gray-200 shadow-mg rounded-lg p-6 self-start w-[340px]">
             <div className="flex justify-between space-x-4">
               <div className="flex flex-col">
                 <label htmlFor="key" className="font-bold">
@@ -230,7 +230,7 @@ function App() {
             <h1 className="text-2xl font-bold">Todo</h1>
             <ul className="list-disc pl-4">
               <li>
-                ⏱️ CAGED mode
+                ✅ CAGED mode
                 <ul className="list-disc pl-4">
                   <li>✅ Select key</li>
                   <li>✅ Show major scale in each position</li>
@@ -257,7 +257,7 @@ function App() {
                     </ul>
                   </li>
                   <li>
-                    ⏱️ Ability to select scales
+                    ✅ Ability to select scales
                     <ul className="list-disc pl-4">
                       <li>✅ Major</li>
                       <li>⏱️ Natural minor</li>
