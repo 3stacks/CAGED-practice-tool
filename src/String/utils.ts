@@ -14,6 +14,7 @@ export const intervalGetterFactory = (
   getGIntervals(rootPosition: number): Interval[];
   getEIntervals(rootPosition: number): Interval[];
   getDIntervals(rootPosition: number): Interval[];
+  getAllIntervals(rootPosition: number): Interval[];
 } => {
   switch (stringNumber) {
     case 1:
@@ -54,6 +55,19 @@ export const intervalGetterFactory = (
             [rootPosition + 3, 4],
           ]);
         },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 3, 3],
+            [rootPosition - 2, 4],
+            [rootPosition, 5],
+            [rootPosition + 2, 6],
+            [rootPosition + 4, 7],
+            [rootPosition + 5, 1],
+            [rootPosition + 7, 2],
+            [rootPosition + 9, 3],
+            [rootPosition + 10, 4],
+          ]);
+        },
       };
     case 2:
       return {
@@ -89,6 +103,19 @@ export const intervalGetterFactory = (
             [rootPosition, 6],
             [rootPosition + 2, 7],
             [rootPosition + 3, 1],
+          ]);
+        },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 3, 7],
+            [rootPosition - 2, 1],
+            [rootPosition, 2],
+            [rootPosition + 2, 3],
+            [rootPosition + 3, 4],
+            [rootPosition + 5, 5],
+            [rootPosition + 7, 6],
+            [rootPosition + 9, 7],
+            [rootPosition + 10, 1],
           ]);
         },
       };
@@ -129,6 +156,17 @@ export const intervalGetterFactory = (
             [rootPosition + 2, 5],
           ]);
         },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 1, 6],
+            [rootPosition + 1, 7],
+            [rootPosition + 2, 1],
+            [rootPosition + 4, 2],
+            [rootPosition + 6, 3],
+            [rootPosition + 7, 4],
+            [rootPosition + 9, 5],
+          ]);
+        },
       };
     case 4:
       return {
@@ -164,6 +202,18 @@ export const intervalGetterFactory = (
             [rootPosition - 1, 7],
             [rootPosition, 1],
             [rootPosition + 2, 2],
+          ]);
+        },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 3, 2],
+            [rootPosition - 1, 3],
+            [rootPosition, 4],
+            [rootPosition + 2, 5],
+            [rootPosition + 4, 6],
+            [rootPosition + 6, 7],
+            [rootPosition + 7, 1],
+            [rootPosition + 9, 2],
           ]);
         },
       };
@@ -204,6 +254,18 @@ export const intervalGetterFactory = (
             [rootPosition + 2, 6],
           ]);
         },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 3, 6],
+            [rootPosition - 1, 7],
+            [rootPosition, 1],
+            [rootPosition + 2, 2],
+            [rootPosition + 4, 3],
+            [rootPosition + 5, 4],
+            [rootPosition + 7, 5],
+            [rootPosition + 9, 6],
+          ]);
+        },
       };
     case 6:
     default:
@@ -240,6 +302,18 @@ export const intervalGetterFactory = (
             [rootPosition - 2, 1],
             [rootPosition, 2],
             [rootPosition + 2, 3],
+          ]);
+        },
+        getAllIntervals(rootPosition: number) {
+          return filterIntervals([
+            [rootPosition - 3, 3],
+            [rootPosition - 2, 4],
+            [rootPosition, 5],
+            [rootPosition + 2, 6],
+            [rootPosition + 4, 7],
+            [rootPosition + 5, 1],
+            [rootPosition + 7, 2],
+            [rootPosition + 9, 3],
           ]);
         },
       };

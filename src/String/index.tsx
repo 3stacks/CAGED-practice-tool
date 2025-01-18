@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import clsx from "clsx";
-import type { Notes, StringNumber } from "./types";
+import type { CAGED, Notes, StringNumber } from "./types";
 import { NOTES } from "./constants";
 import { intervalGetterFactory } from "./utils";
 
@@ -16,7 +16,7 @@ export default function String({
   stringNumber: StringNumber;
   firstNote: Notes;
   activeKey: CAGED | "";
-  activeShape: CAGED | "";
+  activeShape: CAGED | "all" | "";
   triadMode: boolean;
   hideAccidentals: boolean;
   intervalMode: boolean;
@@ -30,6 +30,7 @@ export default function String({
       getGIntervals,
       getEIntervals,
       getDIntervals,
+      getAllIntervals,
     } = intervalGetterFactory(stringNumber);
 
     switch (activeKey) {
@@ -45,6 +46,8 @@ export default function String({
             return getEIntervals(8);
           case "D":
             return getDIntervals(10);
+          case "all":
+            return getAllIntervals(3);
         }
       case "A":
         switch (activeShape) {

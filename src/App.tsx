@@ -7,7 +7,7 @@ export const CAGED_NOTES: CAGED[] = ["C", "A", "G", "E", "D"];
 
 function App() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
-  const [activeShape, setActiveShape] = useState<CAGED | "">("");
+  const [activeShape, setActiveShape] = useState<CAGED | "all" | "">("");
   const [triadMode, setTriadMode] = useState<boolean>(false);
   const [hideAccidentals, setHideAccidentals] = useState<boolean>(false);
   const [intervalMode, setIntervalMode] = useState<boolean>(false);
@@ -100,6 +100,7 @@ function App() {
                       <option value="D">D</option>
                     </>
                   )}
+                  <option value="all">All</option>
                 </select>
               </div>
             </div>
