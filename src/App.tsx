@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "./index.css";
 import String from "./String/index";
-import { CAGED } from "./String/types";
+import { CAGED, ScaleDegree, StringNumber } from "./String/types";
+import { KEY_CHORDS } from "./String/constants";
 
 export const CAGED_NOTES: CAGED[] = ["C", "A", "G", "E", "D"];
+
+const ENABLE_NUMERALS = true;
 
 function App() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
@@ -11,6 +14,7 @@ function App() {
   const [triadMode, setTriadMode] = useState<boolean>(false);
   const [hideAccidentals, setHideAccidentals] = useState<boolean>(false);
   const [intervalMode, setIntervalMode] = useState<boolean>(false);
+  const [scaleDegree, setScaleDegree] = useState<ScaleDegree>("I");
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
@@ -21,7 +25,7 @@ function App() {
             <fieldset className="flex flex-col">
               <legend className="text-xl font-bold mb-2">Options</legend>
               <div className="flex justify-between space-x-2">
-                <label htmlFor="triad_mode">Triad mode</label>
+                <label htmlFor="triad_mode">Arpeggio mode</label>
                 <input
                   type="checkbox"
                   name="triad_mode"
@@ -60,6 +64,7 @@ function App() {
                     setActiveKey(e.target.value as CAGED);
                     setActiveShape(e.target.value as CAGED);
                     setIntervalMode(!!e.target.value);
+                    setScaleDegree("I");
                   }}
                 >
                   <option value="">None</option>
@@ -79,6 +84,7 @@ function App() {
                   value={activeShape}
                   onChange={(e) => {
                     setActiveShape(e.target.value as CAGED);
+                    setScaleDegree("I");
                   }}
                 >
                   {activeKey ? (
@@ -103,6 +109,39 @@ function App() {
                   {/* <option value="all">All</option> */}
                 </select>
               </div>
+              {ENABLE_NUMERALS && triadMode && activeKey && (
+                <div className="flex flex-col">
+                  <label htmlFor="scale_degree" className="font-bold">
+                    Scale degree
+                  </label>
+                  <select
+                    name="scale_degree"
+                    value={scaleDegree}
+                    onChange={(e) => {
+                      setScaleDegree(e.target.value as ScaleDegree);
+                    }}
+                  >
+                    <option value="I">I - {KEY_CHORDS[activeKey]["I"]}</option>
+                    <option value="ii">
+                      ii - {KEY_CHORDS[activeKey]["ii"]}
+                    </option>
+                    <option value="iii">
+                      iii - {KEY_CHORDS[activeKey]["iii"]}
+                    </option>
+                    <option value="IV">
+                      IV - {KEY_CHORDS[activeKey]["IV"]}
+                    </option>
+                    <option value="V">V - {KEY_CHORDS[activeKey]["V"]}</option>
+                    <option value="V">V - {KEY_CHORDS[activeKey]["V"]}</option>
+                    <option value="vi">
+                      vi - {KEY_CHORDS[activeKey]["vi"]}
+                    </option>
+                    <option value="vii°">
+                      vii° - {KEY_CHORDS[activeKey]["vii°"]}
+                    </option>
+                  </select>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -112,13 +151,14 @@ function App() {
               (firstNote, index) => (
                 <String
                   key={`${firstNote}-${index}`}
-                  stringNumber={index + 1}
+                  stringNumber={(index + 1) as StringNumber}
                   activeKey={activeKey}
                   activeShape={activeShape}
                   firstNote={firstNote}
                   triadMode={triadMode}
                   hideAccidentals={hideAccidentals}
                   intervalMode={intervalMode}
+                  scaleDegree={scaleDegree}
                 />
               )
             )}
@@ -149,7 +189,14 @@ function App() {
               <li>✅ Select key</li>
               <li>✅ Show major scale in each position</li>
               <li>✅ Display intervals instead of notes</li>
-              <li>✅ Highlight triads (1, 3, 5)</li>
+              <li>
+                ⏱️ Highlight triads (1, 3, 5)
+                <ul className="list-disc pl-4">
+                  <li>✅ Show only 1, 3, 5 intervals</li>
+                  <li>⏱️ Hide intervals on strings that shouldn't be played</li>
+                </ul>
+              </li>
+              <li>⏱️ Highlight tonic note</li>
               <li>
                 ⏱️ Extended fretboard view - show all shapes to establish the
                 overlaps between them

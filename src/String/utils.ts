@@ -1,4 +1,9 @@
-import type { Interval, StringNumber } from "./types";
+import type {
+  Interval,
+  ScaleDegree,
+  ScaleInterval,
+  StringNumber,
+} from "./types";
 
 const filterIntervals = (intervals: [number, number][]) => {
   return intervals.filter(([position]) => {
@@ -6,8 +11,42 @@ const filterIntervals = (intervals: [number, number][]) => {
   });
 };
 
+/**
+ * Intervals for respective chords
+ * Tonic - 1, 3, 5
+ * ii - 2, 4, 6
+ * iii - 3, 5, 7
+ * IV - 4, 6, 1
+ * V - 5, 7, 2
+ * vi - 6, 1, 3
+ * vii° - 7, 2, 4
+ */
+export const transformInterval = (
+  baseInterval: ScaleInterval,
+  scaleDegree: ScaleDegree
+) => {
+  console.log({ baseInterval, scaleDegree });
+  switch (scaleDegree) {
+    case "I":
+      return baseInterval;
+    case "ii":
+      return (baseInterval + 1) % 7;
+    case "iii":
+      return (baseInterval + 2) % 7;
+    case "IV":
+      return (baseInterval + 3) % 7;
+    case "V":
+      return (baseInterval + 4) % 7;
+    case "vi":
+      return (baseInterval + 5) % 7;
+    case "vii°":
+      return (baseInterval + 6) % 7;
+  }
+};
+
 export const intervalGetterFactory = (
-  stringNumber: StringNumber
+  stringNumber: StringNumber,
+  scaleDegree: ScaleDegree
 ): {
   getCIntervals(rootPosition: number): Interval[];
   getAIntervals(rootPosition: number): Interval[];
@@ -21,51 +60,51 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 3],
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
+            [rootPosition - 3, transformInterval(3, scaleDegree)],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
-            [rootPosition + 4, 7],
-            [rootPosition + 5, 1],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
+            [rootPosition + 4, transformInterval(7, scaleDegree)],
+            [rootPosition + 5, transformInterval(1, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 6],
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
+            [rootPosition - 3, transformInterval(6, scaleDegree)],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
-            [rootPosition + 2, 2],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
+            [rootPosition + 2, transformInterval(2, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 2],
-            [rootPosition + 2, 3],
-            [rootPosition + 3, 4],
+            [rootPosition, transformInterval(2, scaleDegree)],
+            [rootPosition + 2, transformInterval(3, scaleDegree)],
+            [rootPosition + 3, transformInterval(4, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 3],
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
-            [rootPosition + 4, 7],
-            [rootPosition + 5, 1],
-            [rootPosition + 7, 2],
-            [rootPosition + 9, 3],
-            [rootPosition + 10, 4],
+            [rootPosition - 3, transformInterval(3, scaleDegree)],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
+            [rootPosition + 4, transformInterval(7, scaleDegree)],
+            [rootPosition + 5, transformInterval(1, scaleDegree)],
+            [rootPosition + 7, transformInterval(2, scaleDegree)],
+            [rootPosition + 9, transformInterval(3, scaleDegree)],
+            [rootPosition + 10, transformInterval(4, scaleDegree)],
           ]);
         },
       };
@@ -73,49 +112,49 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 7],
-            [rootPosition - 2, 1],
-            [rootPosition, 2],
+            [rootPosition - 3, transformInterval(7, scaleDegree)],
+            [rootPosition - 2, transformInterval(1, scaleDegree)],
+            [rootPosition, transformInterval(2, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 2],
-            [rootPosition + 2, 3],
-            [rootPosition + 3, 4],
+            [rootPosition, transformInterval(2, scaleDegree)],
+            [rootPosition + 2, transformInterval(3, scaleDegree)],
+            [rootPosition + 3, transformInterval(4, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 3],
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
+            [rootPosition - 3, transformInterval(3, scaleDegree)],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 6],
-            [rootPosition + 2, 7],
-            [rootPosition + 3, 1],
+            [rootPosition, transformInterval(6, scaleDegree)],
+            [rootPosition + 2, transformInterval(7, scaleDegree)],
+            [rootPosition + 3, transformInterval(1, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 7],
-            [rootPosition - 2, 1],
-            [rootPosition, 2],
-            [rootPosition + 2, 3],
-            [rootPosition + 3, 4],
-            [rootPosition + 5, 5],
-            [rootPosition + 7, 6],
-            [rootPosition + 9, 7],
-            [rootPosition + 10, 1],
+            [rootPosition - 3, transformInterval(7, scaleDegree)],
+            [rootPosition - 2, transformInterval(1, scaleDegree)],
+            [rootPosition, transformInterval(2, scaleDegree)],
+            [rootPosition + 2, transformInterval(3, scaleDegree)],
+            [rootPosition + 3, transformInterval(4, scaleDegree)],
+            [rootPosition + 5, transformInterval(5, scaleDegree)],
+            [rootPosition + 7, transformInterval(6, scaleDegree)],
+            [rootPosition + 9, transformInterval(7, scaleDegree)],
+            [rootPosition + 10, transformInterval(1, scaleDegree)],
           ]);
         },
       };
@@ -123,48 +162,48 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 5],
-            [rootPosition - 1, 6],
-            [rootPosition + 1, 7],
+            [rootPosition - 3, transformInterval(5, scaleDegree)],
+            [rootPosition - 1, transformInterval(6, scaleDegree)],
+            [rootPosition + 1, transformInterval(7, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 6],
-            [rootPosition + 1, 7],
-            [rootPosition + 2, 1],
+            [rootPosition - 1, transformInterval(6, scaleDegree)],
+            [rootPosition + 1, transformInterval(7, scaleDegree)],
+            [rootPosition + 2, transformInterval(1, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 4, 7],
-            [rootPosition - 3, 1],
-            [rootPosition - 1, 2],
+            [rootPosition - 4, transformInterval(7, scaleDegree)],
+            [rootPosition - 3, transformInterval(1, scaleDegree)],
+            [rootPosition - 1, transformInterval(2, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 2],
-            [rootPosition + 1, 3],
-            [rootPosition + 2, 4],
+            [rootPosition - 1, transformInterval(2, scaleDegree)],
+            [rootPosition + 1, transformInterval(3, scaleDegree)],
+            [rootPosition + 2, transformInterval(4, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
-            [rootPosition + 2, 5],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
+            [rootPosition + 2, transformInterval(5, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 6],
-            [rootPosition + 1, 7],
-            [rootPosition + 2, 1],
-            [rootPosition + 4, 2],
-            [rootPosition + 6, 3],
-            [rootPosition + 7, 4],
-            [rootPosition + 9, 5],
+            [rootPosition - 1, transformInterval(6, scaleDegree)],
+            [rootPosition + 1, transformInterval(7, scaleDegree)],
+            [rootPosition + 2, transformInterval(1, scaleDegree)],
+            [rootPosition + 4, transformInterval(2, scaleDegree)],
+            [rootPosition + 6, transformInterval(3, scaleDegree)],
+            [rootPosition + 7, transformInterval(4, scaleDegree)],
+            [rootPosition + 9, transformInterval(5, scaleDegree)],
           ]);
         },
       };
@@ -172,48 +211,48 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 2],
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
+            [rootPosition - 3, transformInterval(2, scaleDegree)],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
-            [rootPosition + 2, 5],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
+            [rootPosition + 2, transformInterval(5, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 5],
-            [rootPosition - 1, 6],
+            [rootPosition - 3, transformInterval(5, scaleDegree)],
+            [rootPosition - 1, transformInterval(6, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 6],
-            [rootPosition + 1, 7],
-            [rootPosition + 2, 1],
+            [rootPosition - 1, transformInterval(6, scaleDegree)],
+            [rootPosition + 1, transformInterval(7, scaleDegree)],
+            [rootPosition + 2, transformInterval(1, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
-            [rootPosition + 2, 2],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
+            [rootPosition + 2, transformInterval(2, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 2],
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
-            [rootPosition + 2, 5],
-            [rootPosition + 4, 6],
-            [rootPosition + 6, 7],
-            [rootPosition + 7, 1],
-            [rootPosition + 9, 2],
+            [rootPosition - 3, transformInterval(2, scaleDegree)],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
+            [rootPosition + 2, transformInterval(5, scaleDegree)],
+            [rootPosition + 4, transformInterval(6, scaleDegree)],
+            [rootPosition + 6, transformInterval(7, scaleDegree)],
+            [rootPosition + 7, transformInterval(1, scaleDegree)],
+            [rootPosition + 9, transformInterval(2, scaleDegree)],
           ]);
         },
       };
@@ -221,49 +260,49 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 6],
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
+            [rootPosition - 3, transformInterval(6, scaleDegree)],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
-            [rootPosition + 2, 2],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
+            [rootPosition + 2, transformInterval(2, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 2],
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
+            [rootPosition - 3, transformInterval(2, scaleDegree)],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 3],
-            [rootPosition, 4],
-            [rootPosition + 2, 5],
+            [rootPosition - 1, transformInterval(3, scaleDegree)],
+            [rootPosition, transformInterval(4, scaleDegree)],
+            [rootPosition + 2, transformInterval(5, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 6],
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
-            [rootPosition + 2, 2],
-            [rootPosition + 4, 3],
-            [rootPosition + 5, 4],
-            [rootPosition + 7, 5],
-            [rootPosition + 9, 6],
+            [rootPosition - 3, transformInterval(6, scaleDegree)],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
+            [rootPosition + 2, transformInterval(2, scaleDegree)],
+            [rootPosition + 4, transformInterval(3, scaleDegree)],
+            [rootPosition + 5, transformInterval(4, scaleDegree)],
+            [rootPosition + 7, transformInterval(5, scaleDegree)],
+            [rootPosition + 9, transformInterval(6, scaleDegree)],
           ]);
         },
       };
@@ -272,48 +311,48 @@ export const intervalGetterFactory = (
       return {
         getCIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 3],
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
+            [rootPosition - 3, transformInterval(3, scaleDegree)],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
           ]);
         },
         getAIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
           ]);
         },
         getGIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 6],
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
+            [rootPosition - 3, transformInterval(6, scaleDegree)],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
           ]);
         },
         getEIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 1, 7],
-            [rootPosition, 1],
-            [rootPosition + 2, 2],
+            [rootPosition - 1, transformInterval(7, scaleDegree)],
+            [rootPosition, transformInterval(1, scaleDegree)],
+            [rootPosition + 2, transformInterval(2, scaleDegree)],
           ]);
         },
         getDIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 2, 1],
-            [rootPosition, 2],
-            [rootPosition + 2, 3],
+            [rootPosition - 2, transformInterval(1, scaleDegree)],
+            [rootPosition, transformInterval(2, scaleDegree)],
+            [rootPosition + 2, transformInterval(3, scaleDegree)],
           ]);
         },
         getAllIntervals(rootPosition: number) {
           return filterIntervals([
-            [rootPosition - 3, 3],
-            [rootPosition - 2, 4],
-            [rootPosition, 5],
-            [rootPosition + 2, 6],
-            [rootPosition + 4, 7],
-            [rootPosition + 5, 1],
-            [rootPosition + 7, 2],
-            [rootPosition + 9, 3],
+            [rootPosition - 3, transformInterval(3, scaleDegree)],
+            [rootPosition - 2, transformInterval(4, scaleDegree)],
+            [rootPosition, transformInterval(5, scaleDegree)],
+            [rootPosition + 2, transformInterval(6, scaleDegree)],
+            [rootPosition + 4, transformInterval(7, scaleDegree)],
+            [rootPosition + 5, transformInterval(1, scaleDegree)],
+            [rootPosition + 7, transformInterval(2, scaleDegree)],
+            [rootPosition + 9, transformInterval(3, scaleDegree)],
           ]);
         },
       };

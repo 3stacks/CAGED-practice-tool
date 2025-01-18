@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import clsx from "clsx";
-import type { CAGED, Notes, StringNumber } from "./types";
+import type { CAGED, Notes, ScaleDegree, StringNumber } from "./types";
 import { NOTES } from "./constants";
 import { intervalGetterFactory } from "./utils";
 
@@ -12,12 +12,14 @@ export default function String({
   triadMode,
   hideAccidentals,
   intervalMode,
+  scaleDegree,
 }: {
   stringNumber: StringNumber;
   firstNote: Notes;
   activeKey: CAGED | "";
   activeShape: CAGED | "all" | "";
   triadMode: boolean;
+  scaleDegree: ScaleDegree;
   hideAccidentals: boolean;
   intervalMode: boolean;
 }) {
@@ -31,7 +33,7 @@ export default function String({
       getEIntervals,
       getDIntervals,
       getAllIntervals,
-    } = intervalGetterFactory(stringNumber);
+    } = intervalGetterFactory(stringNumber, scaleDegree);
 
     switch (activeKey) {
       case "C":
@@ -110,7 +112,7 @@ export default function String({
             return getAllIntervals(0);
         }
     }
-  }, [stringNumber, firstNote, activeKey, activeShape]);
+  }, [stringNumber, firstNote, activeKey, activeShape, scaleDegree]);
 
   return (
     <div className="relative flex items-center space-x-4">
