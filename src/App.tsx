@@ -4,8 +4,6 @@ import String from "./String/index";
 import { CAGED, ScaleDegree, Scales, StringNumber } from "./String/types";
 import { CAGED_NOTES, KEY_CHORDS } from "./String/constants";
 
-const ENABLE_NUMERALS = true;
-
 function App() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
   const [activeShape, setActiveShape] = useState<CAGED | "all" | "">("");
@@ -37,6 +35,7 @@ function App() {
                   intervalMode={intervalMode}
                   scaleDegree={scaleDegree}
                   relativeIntervals={relativeIntervals}
+                  activeScale={activeScale}
                 />
               )
             )}
@@ -131,6 +130,7 @@ function App() {
                   }}
                 >
                   <option value="major">Major</option>
+                  <option value="pentatonic_major">Pentatonic Major</option>
                 </select>
               </div>
             </div>
@@ -144,7 +144,10 @@ function App() {
                       type="checkbox"
                       name="triad_mode"
                       checked={triadMode}
-                      onChange={(e) => setTriadMode(e.target.checked)}
+                      onChange={(e) => {
+                        setTriadMode(e.target.checked);
+                        setScaleDegree("I");
+                      }}
                     />
                   </div>
                   <div className="flex justify-between space-x-2">
@@ -258,7 +261,7 @@ function App() {
                     <ul className="list-disc pl-4">
                       <li>✅ Major</li>
                       <li>⏱️ Natural minor</li>
-                      <li>⏱️ Pentatonic major</li>
+                      <li>✅ Pentatonic major</li>
                     </ul>
                   </li>
                 </ul>

@@ -1,6 +1,13 @@
 import React, { useMemo } from "react";
 import clsx from "clsx";
-import type { CAGED, Notes, ScaleDegree, StringNumber } from "./types";
+import type {
+  CAGED,
+  Notes,
+  ScaleDegree,
+  ScaleInterval,
+  Scales,
+  StringNumber,
+} from "./types";
 import { NOTES } from "./constants";
 import { intervalGetterFactory } from "./utils";
 
@@ -14,6 +21,7 @@ export default function String({
   intervalMode,
   scaleDegree,
   relativeIntervals,
+  activeScale,
 }: {
   stringNumber: StringNumber;
   firstNote: Notes;
@@ -24,6 +32,7 @@ export default function String({
   hideAccidentals: boolean;
   intervalMode: boolean;
   relativeIntervals: boolean;
+  activeScale: Scales;
 }) {
   const firstIndex = NOTES.indexOf(firstNote);
 
@@ -126,6 +135,9 @@ export default function String({
         if (
           (activeKey && activeShape && !interval) ||
           (triadMode && interval && ![1, 3, 5].includes(interval[1])) ||
+          (activeScale === "pentatonic_major" &&
+            interval &&
+            [4, 7].includes(interval[1])) ||
           (hideAccidentals && note.endsWith("b"))
         ) {
           return <div className="note" key={`${note}-${i}`}></div>;
