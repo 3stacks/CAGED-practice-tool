@@ -100,7 +100,7 @@ function App() {
                       <option value="D">D</option>
                     </>
                   )}
-                  <option value="all">All</option>
+                  {/* <option value="all">All</option> */}
                 </select>
               </div>
             </div>

@@ -61,6 +61,8 @@ export default function String({
             return getDIntervals(7);
           case "C":
             return getCIntervals(12);
+          case "all":
+            return getAllIntervals(0);
         }
       case "G":
         switch (activeShape) {
@@ -74,6 +76,8 @@ export default function String({
             return getCIntervals(10);
           case "A":
             return getAIntervals(10);
+          case "all":
+            return getAllIntervals(3);
         }
       case "E":
         switch (activeShape) {
@@ -87,6 +91,8 @@ export default function String({
             return getAIntervals(7);
           case "G":
             return getGIntervals(12);
+          case "all":
+            return getAllIntervals(0);
         }
       case "D":
         switch (activeShape) {
@@ -100,6 +106,8 @@ export default function String({
             return getGIntervals(10);
           case "E":
             return getEIntervals(10);
+          case "all":
+            return getAllIntervals(0);
         }
     }
   }, [stringNumber, firstNote, activeKey, activeShape]);
