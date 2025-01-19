@@ -126,46 +126,48 @@ export default function String({
   }, [stringNumber, firstNote, activeKey, activeShape, scaleDegree]);
 
   return (
-    <div className="relative flex items-center space-x-4">
-      <div className="w-[105%] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-1 bg-black z-0"></div>
-      {new Array(15).fill(0).map((_, i) => {
-        const note = NOTES[(firstIndex + i) % NOTES.length];
-        const interval = intervals?.find((interval) => interval[0] === i);
+    <div className="w-full px-4 relative flex items-center">
+      <div className="justify-between self-stretch flex items-center w-full">
+        {new Array(15).fill(0).map((_, i) => {
+          const note = NOTES[(firstIndex + i) % NOTES.length];
+          const interval = intervals?.find((interval) => interval[0] === i);
 
-        if (
-          (activeKey && activeShape && !interval) ||
-          (triadMode && interval && ![1, 3, 5].includes(interval[1])) ||
-          (activeScale === "pentatonic_major" &&
-            interval &&
-            [4, 7].includes(interval[1])) ||
-          (hideAccidentals && note.endsWith("b"))
-        ) {
-          return <div className="note" key={`${note}-${i}`}></div>;
-        }
+          if (
+            (activeKey && activeShape && !interval) ||
+            (triadMode && interval && ![1, 3, 5].includes(interval[1])) ||
+            (activeScale === "pentatonic_major" &&
+              interval &&
+              [4, 7].includes(interval[1])) ||
+            (hideAccidentals && note.endsWith("b"))
+          ) {
+            return <div className="note" key={`${note}-${i}`}></div>;
+          }
 
-        return (
-          <div
-            className={clsx("note z-10", {
-              flat: note.endsWith("b"),
-              "note-C": note === "C",
-              "note-Db": note === "Db",
-              "note-D": note === "D",
-              "note-Eb": note === "Eb",
-              "note-E": note === "E",
-              "note-F": note === "F",
-              "note-Gb": note === "Gb",
-              "note-G": note === "G",
-              "note-Ab": note === "Ab",
-              "note-A": note === "A",
-              "note-Bb": note === "Bb",
-              "note-B": note === "B",
-            })}
-            key={`${note}-${i}`}
-          >
-            {intervalMode && interval ? interval[1] : note}
-          </div>
-        );
-      })}
+          return (
+            <div
+              className={clsx("relative note z-10", {
+                flat: note.endsWith("b"),
+                "note-C": note === "C",
+                "note-Db": note === "Db",
+                "note-D": note === "D",
+                "note-Eb": note === "Eb",
+                "note-E": note === "E",
+                "note-F": note === "F",
+                "note-Gb": note === "Gb",
+                "note-G": note === "G",
+                "note-Ab": note === "Ab",
+                "note-A": note === "A",
+                "note-Bb": note === "Bb",
+                "note-B": note === "B",
+              })}
+              key={`${note}-${i}`}
+            >
+              {intervalMode && interval ? interval[1] : note}
+            </div>
+          );
+        })}
+      </div>
+      <div className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-1 bg-black z-0"></div>
     </div>
   );
 }

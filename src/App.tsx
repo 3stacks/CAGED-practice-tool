@@ -16,12 +16,12 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <div className="max-w-screen-lg mx-auto flex flex-col items-between">
+      <div className="w-full max-w-screen-lg mx-auto flex flex-col items-between">
         <div className="w-full flex items-end justify-between mb-6">
           <h1 className="font-bold text-5xl">CAGED Study Tool</h1>
         </div>
-        <div className="flex items-center mb-8">
-          <div className="pl-4 flex flex-col space-y-4 items-center">
+        <div className="flex w-full items-center mb-8">
+          <div className="flex w-full flex-col space-y-4 items-center overflow-auto">
             {(["E", "B", "G", "D", "A", "E"] as CAGED[]).map(
               (firstNote, index) => (
                 <String
@@ -39,22 +39,12 @@ function App() {
                 />
               )
             )}
-            <div className="w-full justify-evenly items-center text-center flex space-x-4">
-              <span className="note text-black ml-4">0</span>
-              <span className="note text-black">1</span>
-              <span className="note text-black">2</span>
-              <span className="note text-black">3</span>
-              <span className="note text-black">4</span>
-              <span className="note text-black">5</span>
-              <span className="note text-black">6</span>
-              <span className="note text-black">7</span>
-              <span className="note text-black">8</span>
-              <span className="note text-black">9</span>
-              <span className="note text-black">10</span>
-              <span className="note text-black">11</span>
-              <span className="note text-black">12</span>
-              <span className="note text-black">13</span>
-              <span className="note text-black">14</span>
+            <div className="w-full justify-between px-4 items-center text-center flex">
+              {new Array(15).fill(0).map((_, index) => (
+                <span className="note text-black" key={index}>
+                  {index}
+                </span>
+              ))}
             </div>
           </div>
         </div>

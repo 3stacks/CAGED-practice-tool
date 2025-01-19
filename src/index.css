@@ -7,9 +7,11 @@
     @apply border-2;
     @apply text-white;
     @apply border-[#020000];
-    @apply w-[50px];
-    @apply h-[50px];
-    @apply text-xl;
+    @apply w-[35px];
+    @apply lg:w-[50px];
+    @apply aspect-square;
+    @apply text-lg;
+    @apply lg:text-xl;
     @apply flex;
     @apply items-center;
     @apply justify-center;
