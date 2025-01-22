@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import "./index.css";
 import String from "./String/index";
-import { CAGED, ScaleDegree, Scales, StringNumber } from "./String/types";
-import { CAGED_NOTES, KEY_CHORDS } from "./String/constants";
+import type { CAGED, Notes, ScaleDegree, Scales, StringNumber } from "./types";
+import { CAGED_NOTES, KEY_CHORDS } from "./constants";
+import Todo from "./Todo";
 
 function App() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
@@ -14,6 +15,29 @@ function App() {
   const [relativeIntervals, setRelativeIntervals] = useState<boolean>(true);
   const [scaleDegree, setScaleDegree] = useState<ScaleDegree>("I");
 
+  const handleKeyChanged = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value as CAGED | "";
+
+    setActiveKey(value);
+    setActiveShape(value);
+    setIntervalMode(!!value);
+    setScaleDegree("I");
+  };
+
+  const handleShapeChanged = (e: ChangeEvent<HTMLSelectElement>) => {
+    setActiveShape(e.target.value as CAGED | "all");
+    setScaleDegree("I");
+  };
+
+  const handleScaleChanged = (e: ChangeEvent<HTMLSelectElement>) => {
+    setActiveScale(e.target.value as Scales);
+  };
+
+  const handleArpeggioModeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    setTriadMode(e.target.checked);
+    setScaleDegree("I");
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="w-full max-w-screen-lg mx-auto flex flex-col items-between">
@@ -22,7 +46,7 @@ function App() {
         </div>
         <div className="flex w-full items-center mb-8">
           <div className="flex w-full flex-col space-y-4 items-center overflow-auto">
-            {(["E", "B", "G", "D", "A", "E"] as CAGED[]).map(
+            {(["E", "B", "G", "D", "A", "E"] as Notes[]).map(
               (firstNote, index) => (
                 <String
                   key={`${firstNote}-${index}`}
@@ -58,12 +82,7 @@ function App() {
                 <select
                   name="key"
                   value={activeKey}
-                  onChange={(e) => {
-                    setActiveKey(e.target.value as CAGED);
-                    setActiveShape(e.target.value as CAGED);
-                    setIntervalMode(!!e.target.value);
-                    setScaleDegree("I");
-                  }}
+                  onChange={handleKeyChanged}
                 >
                   <option value="">None</option>
                   <option value="C">C</option>
@@ -81,11 +100,9 @@ function App() {
                   name="shape"
                   value={activeShape}
                   disabled={!activeKey}
-                  onChange={(e) => {
-                    setActiveShape(e.target.value as CAGED);
-                    setScaleDegree("I");
-                  }}
+                  onChange={handleShapeChanged}
                 >
+                  <option value="all">All</option>
                   {activeKey ? (
                     CAGED_NOTES.slice(CAGED_NOTES.indexOf(activeKey))
                       .concat(
@@ -105,7 +122,6 @@ function App() {
                       <option value="D">D</option>
                     </>
                   )}
-                  {/* <option value="all">All</option> */}
                 </select>
               </div>
               <div className="flex flex-col">
@@ -115,9 +131,7 @@ function App() {
                 <select
                   name="active_scale"
                   value={activeScale}
-                  onChange={(e) => {
-                    setActiveScale(e.target.value as Scales);
-                  }}
+                  onChange={handleScaleChanged}
                 >
                   <option value="major">Major</option>
                   <option value="pentatonic_major">Pentatonic Major</option>
@@ -134,10 +148,7 @@ function App() {
                       type="checkbox"
                       name="triad_mode"
                       checked={triadMode}
-                      onChange={(e) => {
-                        setTriadMode(e.target.checked);
-                        setScaleDegree("I");
-                      }}
+                      onChange={handleArpeggioModeChecked}
                     />
                   </div>
                   <div className="flex justify-between space-x-2">
@@ -216,49 +227,7 @@ function App() {
               </fieldset>
             )}
           </div>
-          <div>
-            <h1 className="text-2xl font-bold">Todo</h1>
-            <ul className="list-disc pl-4">
-              <li>
-                ✅ CAGED mode
-                <ul className="list-disc pl-4">
-                  <li>✅ Select key</li>
-                  <li>✅ Show major scale in each position</li>
-                  <li>✅ Display intervals instead of notes</li>
-                  <li>
-                    ✅ Highlight triads (1, 3, 5)
-                    <ul className="list-disc pl-4">
-                      <li>✅ Show only 1, 3, 5 intervals</li>
-                    </ul>
-                  </li>
-                  <li>⏱️ Highlight tonic note</li>
-                  <li>
-                    ⏱️ Extended fretboard view - show all shapes to establish
-                    the overlaps between them
-                  </li>
-                  <li>
-                    ✅ &quot;Roman Numeral&quot; mode
-                    <ul className="list-disc pl-4">
-                      <li>
-                        Allow cycling through each scale degree, e.g. Key of C
-                        (C, Dm, Em, F, G, Am, Bdim)
-                      </li>
-                      <li>show triads for each of these scale degrees</li>
-                    </ul>
-                  </li>
-                  <li>
-                    ✅ Ability to select scales
-                    <ul className="list-disc pl-4">
-                      <li>✅ Major</li>
-                      <li>⏱️ Natural minor</li>
-                      <li>✅ Pentatonic major</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>⏱️ Mobile support</li>
-            </ul>
-          </div>
+          <Todo />
         </div>
       </div>
     </div>
