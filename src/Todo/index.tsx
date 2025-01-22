@@ -8,11 +8,6 @@ export default function Todo() {
         <li>
           ✅ CAGED mode
           <ul className="list-disc pl-4">
-            <li>⏱️ Highlight tonic note</li>
-            <li>
-              ⏱️ Extended fretboard view - show all shapes and only highlight
-              the active shape
-            </li>
             <li>
               ✅ &quot;Roman Numeral&quot; mode
               <ul className="list-disc pl-4">

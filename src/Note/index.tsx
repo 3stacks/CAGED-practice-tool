@@ -1,15 +1,8 @@
 import clsx from "clsx";
 import React, { useMemo } from "react";
-import type { CAGED } from "../types";
-import { keyShapeRootFretPositionRange } from "../constants";
-
-const majorKeys = {
-  C: ["C", "D", "E", "F", "G", "A", "B"],
-  A: ["A", "B", "Db", "D", "E", "Gb", "Ab"],
-  G: ["G", "A", "B", "C", "D", "E", "Gb"],
-  E: ["E", "Gb", "Ab", "A", "B", "Db", "Eb"],
-  D: ["D", "E", "Gb", "G", "A", "B", "Db"],
-};
+import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
+import { keyShapeRootFretPositionRange, majorKeys } from "../constants";
+import { transformInterval } from "./utils";
 
 export default function Note({
   intervalMode,
@@ -17,16 +10,24 @@ export default function Note({
   activeKey,
   fretNumber,
   activeShape,
+  hideAccidentals,
+  activeScale,
+  scaleDegree,
+  triadMode,
 }: {
   note: string;
   intervalMode: boolean;
   fretNumber: number;
   activeKey: CAGED | "";
   activeShape: CAGED | "all" | "";
+  activeScale: Scales;
+  scaleDegree: ScaleDegree;
+  triadMode: boolean;
+  hideAccidentals: boolean;
 }) {
   const isInKey = activeKey ? majorKeys[activeKey].includes(note) : true;
 
-  if (!isInKey) {
+  if (!isInKey || (hideAccidentals && note.endsWith("b"))) {
     return <div className="note"></div>;
   }
 
@@ -42,6 +43,21 @@ export default function Note({
       return fretNumber >= highlightRange[0] && fretNumber <= highlightRange[1];
     }
   }, [activeKey, activeShape]);
+
+  const noteInterval = activeKey
+    ? transformInterval(
+        majorKeys[activeKey].indexOf(note) as ScaleInterval,
+        scaleDegree,
+        true
+      ) + 1
+    : 0;
+
+  if (
+    (activeScale === "pentatonic_major" && [4, 7].includes(noteInterval)) ||
+    (triadMode && ![1, 3, 5].includes(noteInterval))
+  ) {
+    return <div className="note"></div>;
+  }
 
   return (
     <div
@@ -62,7 +78,7 @@ export default function Note({
         grayscale: activeKey && !highlight,
       })}
     >
-      {intervalMode ? majorKeys[activeKey].indexOf(note) + 1 : note}
+      {intervalMode ? noteInterval : note}
     </div>
   );
 }

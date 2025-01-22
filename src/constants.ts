@@ -85,7 +85,7 @@ export const keyShapeRootFretPositionRange: Record<
     D: [9, 13],
   },
   A: {
-    A: [0, 3],
+    A: [0, 4],
     G: [1, 5],
     E: [4, 7],
     D: [6, 10],

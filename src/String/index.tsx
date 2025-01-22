@@ -34,22 +34,15 @@ export default function String({
         {new Array(15).fill(0).map((_, i) => {
           const note = NOTES[(firstIndex + i) % NOTES.length];
 
-          // if (
-          //   (activeKey && activeShape && !interval) ||
-          //   (triadMode && interval && ![1, 3, 5].includes(interval[1])) ||
-          //   (activeScale === "pentatonic_major" &&
-          //     interval &&
-          //     [4, 7].includes(interval[1])) ||
-          //   (hideAccidentals && note.endsWith("b"))
-          // ) {
-          //   return <div className="note" key={`${note}-${i}`}></div>;
-          // }
-
           return (
             <Note
+              hideAccidentals={hideAccidentals}
               activeKey={activeKey}
               activeShape={activeShape}
+              activeScale={activeScale}
+              scaleDegree={scaleDegree}
               intervalMode={intervalMode}
+              triadMode={triadMode}
               fretNumber={i}
               note={note}
               key={`${note}-${i}`}
