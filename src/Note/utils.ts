@@ -40,3 +40,25 @@ export const transformInterval = (
       return mod(baseInterval - 6, 7);
   }
 };
+
+export const isIntervalInTriad = (
+  interval: number,
+  scaleDegree: ScaleDegree
+) => {
+  switch (scaleDegree) {
+    case "I":
+      return [1, 3, 5].includes(interval);
+    case "ii":
+      return [2, 4, 6].includes(interval);
+    case "iii":
+      return [3, 5, 7].includes(interval);
+    case "IV":
+      return [4, 6, 1].includes(interval);
+    case "V":
+      return [5, 7, 2].includes(interval);
+    case "vi":
+      return [6, 1, 3].includes(interval);
+    case "vii°":
+      return [7, 2, 4].includes(interval);
+  }
+};

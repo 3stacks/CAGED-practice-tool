@@ -42,6 +42,7 @@ export default function String({
               activeScale={activeScale}
               scaleDegree={scaleDegree}
               intervalMode={intervalMode}
+              relativeIntervals={relativeIntervals}
               triadMode={triadMode}
               fretNumber={i}
               note={note}

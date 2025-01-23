@@ -12,7 +12,7 @@ function App() {
   const [triadMode, setTriadMode] = useState<boolean>(false);
   const [hideAccidentals, setHideAccidentals] = useState<boolean>(false);
   const [intervalMode, setIntervalMode] = useState<boolean>(false);
-  const [relativeIntervals, setRelativeIntervals] = useState<boolean>(true);
+  const [relativeIntervals, setRelativeIntervals] = useState<boolean>(false);
   const [scaleDegree, setScaleDegree] = useState<ScaleDegree>("I");
 
   const handleKeyChanged = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -180,10 +180,9 @@ function App() {
                 <div className="flex flex-col">
                   <div className="flex justify-between space-x-2">
                     <label htmlFor="relative_intervals">
-                      Show relative intervals (todo)
+                      Show relative intervals
                     </label>
                     <input
-                      disabled
                       type="checkbox"
                       name="relative_intervals"
                       checked={relativeIntervals}

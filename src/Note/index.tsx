@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useMemo } from "react";
 import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
 import { keyShapeRootFretPositionRange, majorKeys } from "../constants";
-import { transformInterval } from "./utils";
+import { isIntervalInTriad, transformInterval } from "./utils";
 
 export default function Note({
   intervalMode,
@@ -14,6 +14,7 @@ export default function Note({
   activeScale,
   scaleDegree,
   triadMode,
+  relativeIntervals,
 }: {
   note: string;
   intervalMode: boolean;
@@ -24,6 +25,7 @@ export default function Note({
   scaleDegree: ScaleDegree;
   triadMode: boolean;
   hideAccidentals: boolean;
+  relativeIntervals: boolean;
 }) {
   const isInKey = activeKey ? majorKeys[activeKey].includes(note) : true;
 
@@ -31,7 +33,7 @@ export default function Note({
     return <div className="note"></div>;
   }
 
-  const highlight = useMemo(() => {
+  const isFretInRange = useMemo(() => {
     if (!activeKey || activeShape === "all") {
       return true;
     }
@@ -48,16 +50,42 @@ export default function Note({
     ? transformInterval(
         majorKeys[activeKey].indexOf(note) as ScaleInterval,
         scaleDegree,
-        true
+        relativeIntervals
       ) + 1
     : 0;
 
-  if (
-    (activeScale === "pentatonic_major" && [4, 7].includes(noteInterval)) ||
-    (triadMode && ![1, 3, 5].includes(noteInterval))
-  ) {
-    return <div className="note"></div>;
-  }
+  const shouldNoteBeHighlighted = useMemo(() => {
+    if (!activeKey) {
+      return true;
+    }
+
+    if (!isFretInRange) {
+      return false;
+    }
+
+    if (activeScale === "pentatonic_major") {
+      return ![4, 7].includes(noteInterval);
+    }
+
+    if (triadMode) {
+      console.log(noteInterval, scaleDegree);
+      if (relativeIntervals) {
+        return [1, 3, 5].includes(noteInterval);
+      }
+
+      return isIntervalInTriad(noteInterval, scaleDegree);
+    }
+
+    return isFretInRange;
+  }, [
+    activeKey,
+    activeScale,
+    isFretInRange,
+    noteInterval,
+    relativeIntervals,
+    scaleDegree,
+    triadMode,
+  ]);
 
   return (
     <div
@@ -75,7 +103,7 @@ export default function Note({
         "note-A": note === "A",
         "note-Bb": note === "Bb",
         "note-B": note === "B",
-        grayscale: activeKey && !highlight,
+        grayscale: !shouldNoteBeHighlighted,
       })}
     >
       {intervalMode ? noteInterval : note}
