@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useMemo } from "react";
 import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
 import { keyShapeRootFretPositionRange, majorKeys } from "../constants";
-import { isIntervalInTriad, transformInterval } from "./utils";
+import { getNoteClasses, isIntervalInTriad, transformInterval } from "./utils";
 
 export default function Note({
   intervalMode,
@@ -88,24 +88,7 @@ export default function Note({
   ]);
 
   return (
-    <div
-      className={clsx("relative note z-10", {
-        flat: note.endsWith("b"),
-        "note-C": note === "C",
-        "note-Db": note === "Db",
-        "note-D": note === "D",
-        "note-Eb": note === "Eb",
-        "note-E": note === "E",
-        "note-F": note === "F",
-        "note-Gb": note === "Gb",
-        "note-G": note === "G",
-        "note-Ab": note === "Ab",
-        "note-A": note === "A",
-        "note-Bb": note === "Bb",
-        "note-B": note === "B",
-        grayscale: !shouldNoteBeHighlighted,
-      })}
-    >
+    <div className={getNoteClasses(note, !shouldNoteBeHighlighted)}>
       {intervalMode ? noteInterval : note}
     </div>
   );

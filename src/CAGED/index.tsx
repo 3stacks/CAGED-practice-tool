@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import String from "../String/index";
 import type { CAGED, Notes, ScaleDegree, Scales, StringNumber } from "../types";
 import { CAGED_NOTES, KEY_CHORDS } from "../constants";
-import Todo from "../Todo";
+import FretNumbers from "../FretNumbers";
 
 function CAGED() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
@@ -58,13 +58,7 @@ function CAGED() {
               />
             )
           )}
-          <div className="w-full justify-between px-4 items-center text-center flex">
-            {new Array(15).fill(0).map((_, index) => (
-              <span className="note text-black" key={index}>
-                {index}
-              </span>
-            ))}
-          </div>
+          <FretNumbers fretCount={16} />
         </div>
       </div>
       <div className="flex justify-between">
@@ -211,7 +205,6 @@ function CAGED() {
             </fieldset>
           )}
         </div>
-        <Todo />
       </div>
     </>
   );

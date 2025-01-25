@@ -31,23 +31,26 @@ export default function String({
   return (
     <div className="w-full px-4 relative flex items-center">
       <div className="justify-between self-stretch flex items-center w-full">
-        {new Array(15).fill(0).map((_, i) => {
+        {new Array(16).fill(0).map((_, i) => {
           const note = NOTES[(firstIndex + i) % NOTES.length];
 
           return (
-            <Note
-              hideAccidentals={hideAccidentals}
-              activeKey={activeKey}
-              activeShape={activeShape}
-              activeScale={activeScale}
-              scaleDegree={scaleDegree}
-              intervalMode={intervalMode}
-              relativeIntervals={relativeIntervals}
-              triadMode={triadMode}
-              fretNumber={i}
-              note={note}
-              key={`${note}-${i}`}
-            />
+            <>
+              <Note
+                hideAccidentals={hideAccidentals}
+                activeKey={activeKey}
+                activeShape={activeShape}
+                activeScale={activeScale}
+                scaleDegree={scaleDegree}
+                intervalMode={intervalMode}
+                relativeIntervals={relativeIntervals}
+                triadMode={triadMode}
+                fretNumber={i}
+                note={note}
+                key={`${note}-${i}`}
+              />
+              {i === 0 && <div className="h-full w-[5px] bg-black"></div>}
+            </>
           );
         })}
       </div>

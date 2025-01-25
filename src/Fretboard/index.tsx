@@ -7,6 +7,7 @@ import { CircleOfFifthsNotes } from "./types";
 import Note from "./Note";
 import { CIRCLE_OF_FIFTHS, circleOfFifthsNoteAudio } from "./constants";
 import { mod } from "./Note/utils";
+import FretNumbers from "../FretNumbers";
 
 export default function Fretboard() {
   const [delay, setDelay] = React.useState<number>(2);
@@ -110,13 +111,7 @@ export default function Fretboard() {
         {(["E", "B", "G", "D", "A", "E"] as Notes[]).map((firstNote, index) => (
           <String key={`${firstNote}-${index}`} firstNote={firstNote} />
         ))}
-        <div className="w-full justify-between px-4 items-center text-center flex">
-          {new Array(13).fill(0).map((_, index) => (
-            <span className="note text-black" key={index}>
-              {index}
-            </span>
-          ))}
-        </div>
+        <FretNumbers fretCount={13} />
       </div>
     </div>
   );
