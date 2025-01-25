@@ -14,8 +14,29 @@ export default function Fretboard() {
   const [activeNote, setActiveNote] = React.useState<CircleOfFifthsNotes>("C");
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
+  useEffect(() => {
+    const preloadAudio = (file) => {
+      const audio = new Audio(file);
+      audio.preload = "auto";
+      audio.load();
+    };
+
+    Object.values(circleOfFifthsNoteAudio).forEach((file) => {
+      preloadAudio(file);
+    });
+  }, []);
+
   const handleDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDelay(parseInt(e.target.value, 10));
+  };
+
+  const playNote = (note: CircleOfFifthsNotes) => {
+    const audio = audioRef.current;
+
+    if (audio) {
+      audio.src = circleOfFifthsNoteAudio[note];
+      audio.play();
+    }
   };
 
   const handleStart = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,19 +48,12 @@ export default function Fretboard() {
 
     if (!flip) {
       setActiveNote("C");
-    } else {
-      const audio = audioRef.current;
-
-      if (audio) {
-        audio.src = circleOfFifthsNoteAudio["C"];
-        audio.play();
-      }
     }
   };
 
   useEffect(() => {
     if (isStarted) {
-      let activeIndex = 0;
+      let activeIndex = -1;
 
       const interval = setInterval(() => {
         activeIndex = mod(activeIndex + 1, CIRCLE_OF_FIFTHS.length);
