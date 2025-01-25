@@ -10,11 +10,18 @@ export default function Note({ note }: { note: string | null }) {
     <div
       className={clsx("relative note z-10", {
         flat: note.endsWith("b"),
-        "note-G": note === "G",
-        "note-A": note === "A",
-        "note-B": note === "B",
+        "note-C": note === "C",
+        "note-Db": note === "Db",
         "note-D": note === "D",
+        "note-Eb": note === "Eb",
         "note-E": note === "E",
+        "note-F": note === "F",
+        "note-Gb": note === "Gb",
+        "note-G": note === "G",
+        "note-Ab": note === "Ab",
+        "note-A": note === "A",
+        "note-Bb": note === "Bb",
+        "note-B": note === "B",
       })}
     >
       {note}

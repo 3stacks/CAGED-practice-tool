@@ -1,6 +1,6 @@
-import { ScaleDegree, ScaleInterval } from "../types";
+import type { ScaleDegree, ScaleInterval } from "../../types";
 
-const mod = (n: number, m: number) => {
+export const mod = (n: number, m: number) => {
   return ((n % m) + m) % m;
 };
 
