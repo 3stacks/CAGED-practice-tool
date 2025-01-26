@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React, { useMemo } from "react";
 import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
 import { keyShapeRootFretPositionRange, majorKeys } from "../constants";
@@ -68,7 +67,6 @@ export default function Note({
     }
 
     if (triadMode) {
-      console.log(noteInterval, scaleDegree);
       if (relativeIntervals) {
         return [1, 3, 5].includes(noteInterval);
       }
