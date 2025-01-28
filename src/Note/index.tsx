@@ -1,7 +1,17 @@
 import React, { useMemo } from "react";
 import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
-import { keyShapeRootFretPositionRange, majorKeys } from "../constants";
-import { getNoteClasses, isIntervalInTriad, transformInterval } from "./utils";
+import {
+  keyShapeRootFretPositionRange,
+  MAJOR_KEYS,
+  MINOR_KEYS,
+  minorKeyShapeRootFretPositionRange,
+} from "../constants";
+import {
+  getNoteClasses,
+  isIntervalInTriad,
+  prefixInterval,
+  transformInterval,
+} from "./utils";
 
 export default function Note({
   intervalMode,
@@ -26,28 +36,32 @@ export default function Note({
   hideAccidentals: boolean;
   relativeIntervals: boolean;
 }) {
-  const isInKey = activeKey ? majorKeys[activeKey].includes(note) : true;
+  const notesInKey = useMemo(
+    () => (activeScale.includes("minor") ? MINOR_KEYS : MAJOR_KEYS),
+    [activeScale]
+  );
 
-  if (!isInKey || (hideAccidentals && note.endsWith("b"))) {
-    return <div className="note"></div>;
-  }
+  const isInKey = activeKey ? notesInKey[activeKey].includes(note) : true;
 
   const isFretInRange = useMemo(() => {
     if (!activeKey || activeShape === "all") {
       return true;
     }
 
-    const highlightRange =
-      keyShapeRootFretPositionRange[activeKey][activeShape];
+    const highlightRangesToUse = activeScale.includes("minor")
+      ? minorKeyShapeRootFretPositionRange
+      : keyShapeRootFretPositionRange;
+
+    const highlightRange = highlightRangesToUse[activeKey][activeShape];
 
     if (highlightRange) {
       return fretNumber >= highlightRange[0] && fretNumber <= highlightRange[1];
     }
-  }, [activeKey, activeShape]);
+  }, [notesInKey, activeKey, activeShape]);
 
   const noteInterval = activeKey
     ? transformInterval(
-        majorKeys[activeKey].indexOf(note) as ScaleInterval,
+        notesInKey[activeKey].indexOf(note) as ScaleInterval,
         scaleDegree,
         relativeIntervals
       ) + 1
@@ -64,6 +78,10 @@ export default function Note({
 
     if (activeScale === "pentatonic_major") {
       return ![4, 7].includes(noteInterval);
+    }
+
+    if (activeScale === "pentatonic_minor") {
+      return ![2, 6].includes(noteInterval);
     }
 
     if (triadMode) {
@@ -85,9 +103,13 @@ export default function Note({
     triadMode,
   ]);
 
+  if (!isInKey || (hideAccidentals && note.endsWith("b"))) {
+    return <div className="note"></div>;
+  }
+
   return (
     <div className={getNoteClasses(note, !shouldNoteBeHighlighted)}>
-      {intervalMode ? noteInterval : note}
+      {intervalMode ? prefixInterval(noteInterval, activeScale) : note}
     </div>
   );
 }

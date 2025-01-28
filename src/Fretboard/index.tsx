@@ -1,13 +1,13 @@
+import clsx from "clsx";
 import React, { useEffect } from "react";
 import CircleOfFifths from "../CircleOfFifths";
+import FretNumbers from "../FretNumbers";
 import { Notes } from "../types";
 import String from "./String";
-import clsx from "clsx";
-import { CircleOfFifthsNotes } from "./types";
-import Note from "./Note";
 import { CIRCLE_OF_FIFTHS, circleOfFifthsNoteAudio } from "./constants";
+import Note from "./Note";
 import { mod } from "./Note/utils";
-import FretNumbers from "../FretNumbers";
+import { CircleOfFifthsNotes } from "./types";
 
 export default function Fretboard() {
   const [delay, setDelay] = React.useState<number>(2);
@@ -61,13 +61,7 @@ export default function Fretboard() {
         const nextNote = CIRCLE_OF_FIFTHS[activeIndex];
 
         setActiveNote(nextNote);
-
-        const audio = audioRef.current;
-
-        if (audio) {
-          audio.src = circleOfFifthsNoteAudio[nextNote];
-          audio.play();
-        }
+        playNote(nextNote);
       }, delay * 1000);
 
       return () => {

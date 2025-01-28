@@ -3,8 +3,9 @@ import String from "../String/index";
 import type { CAGED, Notes, ScaleDegree, Scales, StringNumber } from "../types";
 import { CAGED_NOTES, KEY_CHORDS } from "../constants";
 import FretNumbers from "../FretNumbers";
+import { mod } from "../Note/utils";
 
-function CAGED() {
+export default function CAGED() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
   const [activeShape, setActiveShape] = useState<CAGED | "all" | "">("");
   const [activeScale, setActiveScale] = useState<Scales>("major");
@@ -58,12 +59,12 @@ function CAGED() {
               />
             )
           )}
-          <FretNumbers fretCount={16} />
+          <FretNumbers fretCount={17} />
         </div>
       </div>
       <div className="flex justify-between">
         <div className="flex flex-col items-stretch space-y-4 bg-gray-200 shadow-mg rounded-lg p-6 self-start w-[340px]">
-          <div className="flex justify-between space-x-4">
+          <div className="flex flex-wrap justify-between gap-4">
             <div className="flex flex-col">
               <label htmlFor="key" className="font-bold">
                 Key
@@ -96,6 +97,9 @@ function CAGED() {
                     .map((note) => (
                       <option value={note} key={note}>
                         {note}
+                        {activeScale.includes("minor")
+                          ? ` - (${CAGED_NOTES[mod(CAGED_NOTES.indexOf(note) - 1, CAGED_NOTES.length)]})`
+                          : ""}
                       </option>
                     ))
                 ) : (
@@ -119,7 +123,9 @@ function CAGED() {
                 onChange={handleScaleChanged}
               >
                 <option value="major">Major</option>
+                <option value="natural_minor">Natural Minor (Aeolian)</option>
                 <option value="pentatonic_major">Pentatonic Major</option>
+                <option value="pentatonic_minor">Pentatonic Minor</option>
               </select>
             </div>
           </div>
@@ -209,5 +215,3 @@ function CAGED() {
     </>
   );
 }
-
-export default CAGED;

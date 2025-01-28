@@ -31,7 +31,7 @@ export default function String({
   return (
     <div className="w-full px-4 relative flex items-center">
       <div className="justify-between self-stretch flex items-center w-full">
-        {new Array(16).fill(0).map((_, i) => {
+        {new Array(17).fill(0).map((_, i) => {
           const note = NOTES[(firstIndex + i) % NOTES.length];
 
           return (
