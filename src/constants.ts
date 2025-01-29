@@ -77,6 +77,10 @@ export const MINOR_KEYS: Record<keyof typeof MAJOR_KEYS, Notes[]> =
   }, MAJOR_KEYS);
 
 export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
+  if (!key) {
+    return [];
+  }
+
   const baseNotes = MAJOR_KEYS[key];
   const minorScaleNotes = flattenScaleDegrees(baseNotes, [3, 6, 7]);
 
