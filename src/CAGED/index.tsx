@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 import String from "../String/index";
 import type { CAGED, Notes, ScaleDegree, Scales, StringNumber } from "../types";
-import { CAGED_NOTES, KEY_CHORDS } from "../constants";
+import { CAGED_NOTES, KEY_CHORDS, SCALES } from "../constants";
 import FretNumbers from "../FretNumbers";
 import { mod } from "../Note/utils";
+import { parseScaleName } from "./utils";
 
 export default function CAGED() {
   const [activeKey, setActiveKey] = useState<CAGED | "">("");
@@ -46,7 +47,6 @@ export default function CAGED() {
             (firstNote, index) => (
               <String
                 key={`${firstNote}-${index}`}
-                stringNumber={(index + 1) as StringNumber}
                 activeKey={activeKey}
                 activeShape={activeShape}
                 firstNote={firstNote}
@@ -121,11 +121,15 @@ export default function CAGED() {
                 name="active_scale"
                 value={activeScale}
                 onChange={handleScaleChanged}
+                className="capitalize"
               >
-                <option value="major">Major</option>
-                <option value="natural_minor">Natural Minor (Aeolian)</option>
-                <option value="pentatonic_major">Pentatonic Major</option>
-                <option value="pentatonic_minor">Pentatonic Minor</option>
+                {SCALES.map((scale) => {
+                  return (
+                    <option value={scale} key={scale}>
+                      {parseScaleName(scale)}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>

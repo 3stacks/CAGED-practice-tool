@@ -5,7 +5,6 @@ import Note from "../Note";
 
 export default function String({
   firstNote,
-  stringNumber,
   activeKey,
   activeShape,
   triadMode,
@@ -15,7 +14,6 @@ export default function String({
   relativeIntervals,
   activeScale,
 }: {
-  stringNumber: StringNumber;
   firstNote: Notes;
   activeKey: CAGED | "";
   activeShape: CAGED | "all" | "";
@@ -35,7 +33,7 @@ export default function String({
           const note = NOTES[(firstIndex + i) % NOTES.length];
 
           return (
-            <>
+            <React.Fragment key={`${note}-${i}`}>
               <Note
                 hideAccidentals={hideAccidentals}
                 activeKey={activeKey}
@@ -47,10 +45,9 @@ export default function String({
                 triadMode={triadMode}
                 fretNumber={i}
                 note={note}
-                key={`${note}-${i}`}
               />
               {i === 0 && <div className="h-full w-[5px] bg-black"></div>}
-            </>
+            </React.Fragment>
           );
         })}
       </div>

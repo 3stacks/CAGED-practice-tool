@@ -1,9 +1,14 @@
 import React, { useMemo } from "react";
-import type { CAGED, ScaleDegree, ScaleInterval, Scales } from "../types";
+import type {
+  CAGED,
+  Notes,
+  ScaleDegree,
+  ScaleInterval,
+  Scales,
+} from "../types";
 import {
+  getScaleNotes,
   keyShapeRootFretPositionRange,
-  MAJOR_KEYS,
-  MINOR_KEYS,
   minorKeyShapeRootFretPositionRange,
 } from "../constants";
 import {
@@ -25,7 +30,7 @@ export default function Note({
   triadMode,
   relativeIntervals,
 }: {
-  note: string;
+  note: Notes;
   intervalMode: boolean;
   fretNumber: number;
   activeKey: CAGED | "";
@@ -37,11 +42,11 @@ export default function Note({
   relativeIntervals: boolean;
 }) {
   const notesInKey = useMemo(
-    () => (activeScale.includes("minor") ? MINOR_KEYS : MAJOR_KEYS),
-    [activeScale]
+    () => getScaleNotes(activeKey as Notes, activeScale),
+    [activeScale, activeKey]
   );
 
-  const isInKey = activeKey ? notesInKey[activeKey].includes(note) : true;
+  const isInKey = activeKey ? notesInKey.includes(note) : true;
 
   const isFretInRange = useMemo(() => {
     if (!activeKey || activeShape === "all") {
@@ -57,11 +62,11 @@ export default function Note({
     if (highlightRange) {
       return fretNumber >= highlightRange[0] && fretNumber <= highlightRange[1];
     }
-  }, [notesInKey, activeKey, activeShape]);
+  }, [activeKey, activeShape]);
 
   const noteInterval = activeKey
     ? transformInterval(
-        notesInKey[activeKey].indexOf(note) as ScaleInterval,
+        notesInKey.indexOf(note) as ScaleInterval,
         scaleDegree,
         relativeIntervals
       ) + 1

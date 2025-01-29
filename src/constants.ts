@@ -1,7 +1,7 @@
 import { mod } from "./Note/utils";
-import { CAGED } from "./types";
+import { CAGED, Notes, Scales } from "./types";
 
-export const NOTES = [
+export const NOTES: Notes[] = [
   "C",
   "Db",
   "D",
@@ -16,7 +16,33 @@ export const NOTES = [
   "B",
 ];
 
-export const converMajorScaleToMinor = (majorScale: string[]): string[] => {
+export const flattenScaleDegrees = (
+  notes: Notes[],
+  degrees: number[]
+): Notes[] => {
+  return notes.map((note, index) => {
+    if (degrees.includes(index + 1)) {
+      return NOTES[mod(NOTES.indexOf(note) - 1, NOTES.length)];
+    }
+
+    return note;
+  });
+};
+
+export const raiseScaleDegrees = (
+  notes: Notes[],
+  degrees: number[]
+): Notes[] => {
+  return notes.map((note, index) => {
+    if (degrees.includes(index + 1)) {
+      return NOTES[mod(NOTES.indexOf(note) + 1, NOTES.length)];
+    }
+
+    return note;
+  });
+};
+
+export const converMajorScaleToMinor = (majorScale: Notes[]): string[] => {
   // Flatten the third, sixth, and seventh notes
   return majorScale.map((note, index) => {
     if (index === 2 || index === 5 || index === 6) {
@@ -27,7 +53,7 @@ export const converMajorScaleToMinor = (majorScale: string[]): string[] => {
   });
 };
 
-export const MAJOR_KEYS = {
+export const MAJOR_KEYS: Record<Notes, Notes[]> = {
   C: ["C", "D", "E", "F", "G", "A", "B"],
   Db: ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"],
   D: ["D", "E", "Gb", "G", "A", "B", "Db"],
@@ -42,13 +68,35 @@ export const MAJOR_KEYS = {
   B: ["B", "Db", "Eb", "E", "Gb", "Ab", "Bb"],
 };
 
-export const MINOR_KEYS: Record<keyof typeof MAJOR_KEYS, string[]> =
+export const MINOR_KEYS: Record<keyof typeof MAJOR_KEYS, Notes[]> =
   Object.entries(MAJOR_KEYS).reduce((acc, [key, notes]) => {
     return {
       ...acc,
-      [key]: converMajorScaleToMinor(notes),
+      [key]: flattenScaleDegrees(notes, [3, 6, 7]),
     };
   }, MAJOR_KEYS);
+
+export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
+  const baseNotes = MAJOR_KEYS[key];
+
+  switch (scale) {
+    case "dorian":
+      return flattenScaleDegrees(baseNotes, [3, 7]);
+    case "phrygian":
+      return flattenScaleDegrees(baseNotes, [2, 3, 6, 7]);
+    case "lydian":
+      return raiseScaleDegrees(baseNotes, [4]);
+    case "mixolydian":
+      return flattenScaleDegrees(baseNotes, [7]);
+    case "natural_minor":
+      return flattenScaleDegrees(baseNotes, [3, 6, 7]);
+    case "locrian":
+      return flattenScaleDegrees(baseNotes, [2, 3, 5, 6, 7]);
+    case "major":
+    default:
+      return baseNotes;
+  }
+};
 
 export const KEY_CHORDS = {
   C: {
@@ -179,3 +227,15 @@ export const minorKeyShapeRootFretPositionRange: Record<
     E: [9, 13],
   },
 };
+
+export const SCALES: Scales[] = [
+  "major",
+  "pentatonic_major",
+  "natural_minor",
+  "pentatonic_minor",
+  "dorian",
+  "phrygian",
+  "lydian",
+  "mixolydian",
+  "locrian",
+];
