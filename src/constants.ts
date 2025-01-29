@@ -68,15 +68,7 @@ export const MAJOR_KEYS: Record<Notes, Notes[]> = {
   B: ["B", "Db", "Eb", "E", "Gb", "Ab", "Bb"],
 };
 
-export const MINOR_KEYS: Record<keyof typeof MAJOR_KEYS, Notes[]> =
-  Object.entries(MAJOR_KEYS).reduce((acc, [key, notes]) => {
-    return {
-      ...acc,
-      [key]: flattenScaleDegrees(notes, [3, 6, 7]),
-    };
-  }, MAJOR_KEYS);
-
-export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
+export const getScaleNotes = (key: Notes, scale: Scales): (Notes | null)[] => {
   if (!key) {
     return [];
   }
@@ -98,9 +90,11 @@ export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
     case "locrian":
       return flattenScaleDegrees(baseNotes, [2, 3, 5, 6, 7]);
     case "pentatonic_major":
-      return baseNotes.filter((_, i) => ![4, 7].includes(i + 1));
+      return baseNotes.map((note, i) => ([4, 7].includes(i + 1) ? null : note));
     case "pentatonic_minor":
-      return minorScaleNotes.filter((_, i) => ![2, 6].includes(i + 1));
+      return minorScaleNotes.map((note, i) =>
+        [2, 6].includes(i + 1) ? null : note
+      );
     case "major":
     default:
       return baseNotes;
