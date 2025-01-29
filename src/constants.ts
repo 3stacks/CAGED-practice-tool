@@ -78,6 +78,7 @@ export const MINOR_KEYS: Record<keyof typeof MAJOR_KEYS, Notes[]> =
 
 export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
   const baseNotes = MAJOR_KEYS[key];
+  const minorScaleNotes = flattenScaleDegrees(baseNotes, [3, 6, 7]);
 
   switch (scale) {
     case "dorian":
@@ -89,9 +90,13 @@ export const getScaleNotes = (key: Notes, scale: Scales): Notes[] => {
     case "mixolydian":
       return flattenScaleDegrees(baseNotes, [7]);
     case "natural_minor":
-      return flattenScaleDegrees(baseNotes, [3, 6, 7]);
+      return minorScaleNotes;
     case "locrian":
       return flattenScaleDegrees(baseNotes, [2, 3, 5, 6, 7]);
+    case "pentatonic_major":
+      return baseNotes.filter((_, i) => ![4, 7].includes(i + 1));
+    case "pentatonic_minor":
+      return minorScaleNotes.filter((_, i) => ![2, 6].includes(i + 1));
     case "major":
     default:
       return baseNotes;

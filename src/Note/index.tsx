@@ -81,14 +81,6 @@ export default function Note({
       return false;
     }
 
-    if (activeScale === "pentatonic_major") {
-      return ![4, 7].includes(noteInterval);
-    }
-
-    if (activeScale === "pentatonic_minor") {
-      return ![2, 6].includes(noteInterval);
-    }
-
     if (triadMode) {
       if (relativeIntervals) {
         return [1, 3, 5].includes(noteInterval);

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Notes, ScaleDegree, ScaleInterval } from "../types";
+import { Notes, ScaleDegree, ScaleInterval, Scales } from "../types";
 
 export const mod = (n: number, m: number) => {
   return ((n % m) + m) % m;
@@ -84,9 +84,9 @@ export const getNoteClasses = (note: string, isGrayscale: boolean) => {
 };
 
 export const prefixInterval = (interval: number, activeScale: Scales) => {
-  if (activeScale.includes("minor") && [3, 6, 7].includes(interval)) {
-    return `b${interval}`;
-  }
+  // if (activeScale.includes("minor") && [3, 6, 7].includes(interval)) {
+  // return `b${interval}`;
+  // }
 
   return interval;
 };
