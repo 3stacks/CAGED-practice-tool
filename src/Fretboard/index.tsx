@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import CircleOfFifths from "../CircleOfFifths";
 import FretNumbers from "../FretNumbers";
 import { Notes } from "../types";
+import { mod } from "../utils";
 import String from "./String";
 import { CIRCLE_OF_FIFTHS, circleOfFifthsNoteAudio } from "./constants";
 import Note from "./Note";
-import { mod } from "./Note/utils";
 import { CircleOfFifthsNotes } from "./types";
 
 export default function Fretboard() {
@@ -16,7 +16,7 @@ export default function Fretboard() {
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    const preloadAudio = (file) => {
+    const preloadAudio = (file: string) => {
       const audio = new Audio(file);
       audio.preload = "auto";
       audio.load();
@@ -71,41 +71,65 @@ export default function Fretboard() {
   }, [isStarted]);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <audio ref={audioRef}></audio>
-      <div className="flex items-center justify-between mb-5">
-        <CircleOfFifths />
+
+      {/* Controls section - responsive grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 items-start">
+        {/* Circle of Fifths - hidden on smallest screens */}
+        <div className="hidden sm:flex justify-center">
+          <CircleOfFifths />
+        </div>
+
+        {/* Active Note */}
         <div className="flex items-center flex-col space-y-2">
-          <h2 className="font-bold text-2xl">Active Note</h2>
+          <h2 className="font-bold text-xl sm:text-2xl dark:text-white">Active Note</h2>
           <Note note={activeNote} />
         </div>
-        <div>
-          <h2 className="font-bold text-2xl mb-3">Play</h2>
-          <form onSubmit={handleStart}>
-            <div className="flex flex-col space-y-1 mb-2">
-              <label htmlFor="delay">Delay (seconds)</label>
+
+        {/* Play controls */}
+        <div className="flex flex-col items-center sm:items-start">
+          <h2 className="font-bold text-xl sm:text-2xl mb-3 dark:text-white">Play</h2>
+          <form onSubmit={handleStart} className="w-full max-w-[200px]">
+            <div className="flex flex-col space-y-1 mb-3">
+              <label htmlFor="delay" className="text-sm dark:text-gray-200">
+                Delay (seconds)
+              </label>
               <input
                 type="number"
                 name="delay"
                 value={delay}
-                className="border border-gray-300 rounded-lg px-2 py-1"
+                min={1}
+                max={10}
+                className="min-h-[44px] border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 onChange={handleDelayChange}
               />
             </div>
             <button
               type="submit"
-              className={clsx("bg-blue-600 text-white px-4 py-2 rounded-lg")}
+              className={clsx(
+                "w-full min-h-[44px] px-4 py-2 rounded-lg font-medium transition-colors",
+                isStarted
+                  ? "bg-red-600 hover:bg-red-700 text-white"
+                  : "bg-blue-600 hover:bg-blue-700 text-white"
+              )}
             >
               {isStarted ? "Stop" : "Start"}
             </button>
           </form>
         </div>
       </div>
-      <div className="flex w-full flex-col space-y-4 items-center overflow-auto">
-        {(["E", "B", "G", "D", "A", "E"] as Notes[]).map((firstNote, index) => (
-          <String key={`${firstNote}-${index}`} firstNote={firstNote} />
-        ))}
-        <FretNumbers fretCount={13} />
+
+      {/* Fretboard with horizontal scroll on mobile */}
+      <div className="overflow-x-auto pb-4">
+        <div className="min-w-[650px]">
+          <div className="flex w-full flex-col space-y-3 sm:space-y-4 items-center">
+            {(["E", "B", "G", "D", "A", "E"] as Notes[]).map((firstNote, index) => (
+              <String key={`${firstNote}-${index}`} firstNote={firstNote} />
+            ))}
+            <FretNumbers fretCount={13} />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { getNoteClasses } from "../../Note/utils";
+import { getNoteClasses } from "../../utils";
 
 export default function Note({ note }: { note: string | null }) {
   if (!note) {

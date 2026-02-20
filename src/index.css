@@ -7,33 +7,43 @@
     @apply border-2;
     @apply text-white;
     @apply border-[#020000];
-    @apply w-[35px];
+    @apply dark:border-gray-300;
+    @apply w-[32px];
+    @apply xs:w-[35px];
     @apply lg:w-[50px];
     @apply aspect-square;
-    @apply text-lg;
+    @apply text-base;
+    @apply xs:text-lg;
     @apply lg:text-xl;
     @apply flex;
     @apply items-center;
     @apply justify-center;
     @apply font-bold;
+    /* Animated transitions for smooth shape changes */
+    transition: opacity 0.2s ease-in-out,
+                transform 0.2s ease-in-out,
+                background-color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out;
 
-    &.flat {
+    &.accidental {
       @apply rounded-full;
-      @apply text-lg;
+      @apply text-sm;
+      @apply xs:text-base;
+      @apply lg:text-lg;
+    }
+
+    &.grayscale {
+      @apply opacity-30;
+      transform: scale(0.9);
     }
   }
 
+  /* Natural notes */
   .note-C {
     @apply bg-C;
   }
-  .note-Db {
-    @apply bg-Db;
-  }
   .note-D {
     @apply bg-D;
-  }
-  .note-Eb {
-    @apply bg-Eb;
   }
   .note-E {
     color: #020000;
@@ -42,24 +52,49 @@
   .note-F {
     @apply bg-F;
   }
-  .note-Gb {
-    @apply bg-Gb;
-  }
   .note-G {
     @apply bg-G;
-  }
-  .note-Ab {
-    @apply bg-Ab;
   }
   .note-A {
     color: #020000;
     @apply bg-A;
   }
-  .note-Bb {
-    @apply bg-Bb;
-  }
   .note-B {
     color: #020000;
     @apply bg-B;
+  }
+
+  /* Flat notes */
+  .note-Db {
+    @apply bg-Db;
+  }
+  .note-Eb {
+    @apply bg-Eb;
+  }
+  .note-Gb {
+    @apply bg-Gb;
+  }
+  .note-Ab {
+    @apply bg-Ab;
+  }
+  .note-Bb {
+    @apply bg-Bb;
+  }
+
+  /* Sharp notes (same colors as enharmonic flats) */
+  .note-C-sharp {
+    @apply bg-C-sharp;
+  }
+  .note-D-sharp {
+    @apply bg-D-sharp;
+  }
+  .note-F-sharp {
+    @apply bg-F-sharp;
+  }
+  .note-G-sharp {
+    @apply bg-G-sharp;
+  }
+  .note-A-sharp {
+    @apply bg-A-sharp;
   }
 }

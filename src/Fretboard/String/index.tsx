@@ -16,16 +16,16 @@ export default function String({ firstNote }: { firstNote: Notes }) {
           const parsedNote = !notesToShow.includes(note) ? null : note;
 
           return (
-            <>
-              <Note note={parsedNote} key={`${note}-${i}`} />
+            <React.Fragment key={`${note}-${i}`}>
+              <Note note={parsedNote} />
               {i === 0 && (
-                <div className="h-[35px] lg:h-[50px] w-[5px] bg-black"></div>
+                <div className="h-[32px] xs:h-[35px] lg:h-[50px] w-[4px] xs:w-[5px] bg-black dark:bg-white"></div>
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
-      <div className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-1 bg-black z-0"></div>
+      <div className="w-full absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 h-1 bg-black dark:bg-gray-400 z-0"></div>
     </div>
   );
 }

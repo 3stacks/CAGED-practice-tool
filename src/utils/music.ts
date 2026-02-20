@@ -1,7 +1,33 @@
-import type { ScaleDegree, ScaleInterval } from "../../types";
+import type { ScaleDegree, ScaleInterval } from "../types";
+import { ENHARMONIC_MAP } from "../constants";
 
+/**
+ * Modulo that handles negative numbers correctly
+ */
 export const mod = (n: number, m: number) => {
   return ((n % m) + m) % m;
+};
+
+/**
+ * Check if two notes are the same (considering enharmonic equivalents)
+ */
+export const isEnharmonicEqual = (a: string, b: string): boolean => {
+  if (a === b) return true;
+  return ENHARMONIC_MAP[a] === b;
+};
+
+/**
+ * Find index of a note in an array (considering enharmonic equivalents)
+ */
+export const findNoteIndex = (notes: (string | null)[], note: string): number => {
+  return notes.findIndex((n) => n !== null && isEnharmonicEqual(n, note));
+};
+
+/**
+ * Check if a note is in an array (considering enharmonic equivalents)
+ */
+export const isNoteInArray = (notes: (string | null)[], note: string): boolean => {
+  return findNoteIndex(notes, note) !== -1;
 };
 
 /**

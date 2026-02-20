@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import type {
+  AllKeys,
   CAGED,
   Notes,
   ScaleDegree,
@@ -7,15 +8,17 @@ import type {
   Scales,
 } from "../types";
 import {
+  ENHARMONIC_MAP,
   getScaleNotes,
-  keyShapeRootFretPositionRange,
-  minorKeyShapeRootFretPositionRange,
+  getShapeFretRange,
 } from "../constants";
 import {
   getNoteClasses,
   isIntervalInTriad,
   prefixInterval,
   transformInterval,
+  findNoteIndex,
+  isNoteInArray,
 } from "./utils";
 
 export default function Note({
@@ -25,6 +28,7 @@ export default function Note({
   fretNumber,
   activeShape,
   hideAccidentals,
+  showBothEnharmonics,
   activeScale,
   scaleDegree,
   triadMode,
@@ -33,12 +37,13 @@ export default function Note({
   note: Notes;
   intervalMode: boolean;
   fretNumber: number;
-  activeKey: CAGED | "";
+  activeKey: AllKeys | "";
   activeShape: CAGED | "all" | "";
   activeScale: Scales;
   scaleDegree: ScaleDegree;
   triadMode: boolean;
   hideAccidentals: boolean;
+  showBothEnharmonics: boolean;
   relativeIntervals: boolean;
 }) {
   const notesInKey = useMemo(
@@ -46,31 +51,37 @@ export default function Note({
     [activeScale, activeKey]
   );
 
-  const isInKey = activeKey ? notesInKey.includes(note) : true;
+  const isInKey = activeKey ? isNoteInArray(notesInKey, note) : true;
 
   const isFretInRange = useMemo(() => {
     if (!activeKey || activeShape === "all") {
       return true;
     }
 
-    const highlightRangesToUse = activeScale.includes("minor")
-      ? minorKeyShapeRootFretPositionRange
-      : keyShapeRootFretPositionRange;
-
-    const highlightRange = highlightRangesToUse[activeKey][activeShape];
+    const isMinor = activeScale.includes("minor");
+    const highlightRange = getShapeFretRange(activeKey, activeShape, isMinor);
 
     if (highlightRange) {
       return fretNumber >= highlightRange[0] && fretNumber <= highlightRange[1];
     }
-  }, [activeKey, activeShape]);
+    return false;
+  }, [activeKey, activeShape, activeScale, fretNumber]);
+
+  // Get the index of this note in the scale
+  const noteIndexInScale = findNoteIndex(notesInKey, note);
 
   const noteInterval = activeKey
     ? transformInterval(
-        notesInKey.indexOf(note) as ScaleInterval,
+        noteIndexInScale as ScaleInterval,
         scaleDegree,
         relativeIntervals
       ) + 1
     : 0;
+
+  // Get the correct enharmonic spelling from the scale (e.g., F# instead of Gb)
+  const displayNote = activeKey && noteIndexInScale >= 0
+    ? notesInKey[noteIndexInScale] || note
+    : note;
 
   const shouldNoteBeHighlighted = useMemo(() => {
     if (!activeKey) {
@@ -100,13 +111,28 @@ export default function Note({
     triadMode,
   ]);
 
-  if (!isInKey || (hideAccidentals && note.endsWith("b"))) {
+  const isAccidental = displayNote.endsWith("b") || displayNote.includes("#");
+  if (!isInKey || (hideAccidentals && isAccidental)) {
     return <div className="note"></div>;
   }
 
+  // Get the display text (with optional enharmonic)
+  const getDisplayText = () => {
+    if (intervalMode) {
+      return prefixInterval(noteInterval, activeScale);
+    }
+    if (showBothEnharmonics && isAccidental) {
+      const enharmonic = ENHARMONIC_MAP[displayNote as string];
+      if (enharmonic && enharmonic !== displayNote) {
+        return `${displayNote}/${enharmonic}`;
+      }
+    }
+    return displayNote;
+  };
+
   return (
-    <div className={getNoteClasses(note, !shouldNoteBeHighlighted)}>
-      {intervalMode ? prefixInterval(noteInterval, activeScale) : note}
+    <div className={getNoteClasses(displayNote, !shouldNoteBeHighlighted)}>
+      {getDisplayText()}
     </div>
   );
 }
